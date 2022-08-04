@@ -30,8 +30,6 @@ namespace HastaneKayit
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtsifre = new System.Windows.Forms.TextBox();
             this.msktc = new System.Windows.Forms.MaskedTextBox();
             this.btngiris = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
@@ -48,24 +46,6 @@ namespace HastaneKayit
             this.label1.TabIndex = 0;
             this.label1.Text = "hasta tc:";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(50, 64);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "sifre:";
-            // 
-            // txtsifre
-            // 
-            this.txtsifre.Location = new System.Drawing.Point(85, 61);
-            this.txtsifre.Name = "txtsifre";
-            this.txtsifre.Size = new System.Drawing.Size(100, 20);
-            this.txtsifre.TabIndex = 2;
-            this.txtsifre.Text = "1";
-            this.txtsifre.UseSystemPasswordChar = true;
-            // 
             // msktc
             // 
             this.msktc.Location = new System.Drawing.Point(85, 35);
@@ -78,7 +58,7 @@ namespace HastaneKayit
             // 
             // btngiris
             // 
-            this.btngiris.Location = new System.Drawing.Point(67, 87);
+            this.btngiris.Location = new System.Drawing.Point(67, 61);
             this.btngiris.Name = "btngiris";
             this.btngiris.Size = new System.Drawing.Size(89, 28);
             this.btngiris.TabIndex = 3;
@@ -89,7 +69,7 @@ namespace HastaneKayit
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(176, 95);
+            this.linkLabel1.Location = new System.Drawing.Point(172, 104);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(39, 13);
             this.linkLabel1.TabIndex = 5;
@@ -127,8 +107,6 @@ namespace HastaneKayit
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.btngiris);
             this.Controls.Add(this.msktc);
-            this.Controls.Add(this.txtsifre);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FrmHastaGiris";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -141,8 +119,6 @@ namespace HastaneKayit
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtsifre;
         private System.Windows.Forms.MaskedTextBox msktc;
         private System.Windows.Forms.Button btngiris;
         private System.Windows.Forms.LinkLabel linkLabel1;

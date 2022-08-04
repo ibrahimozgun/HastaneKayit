@@ -71,10 +71,11 @@ namespace HastaneKayit
             // txtsifre
             // 
             this.txtsifre.Location = new System.Drawing.Point(56, 80);
+            this.txtsifre.MaxLength = 10;
             this.txtsifre.Name = "txtsifre";
             this.txtsifre.Size = new System.Drawing.Size(100, 20);
             this.txtsifre.TabIndex = 2;
-            this.txtsifre.Text = "3";
+            this.txtsifre.Text = "3333";
             this.txtsifre.UseSystemPasswordChar = true;
             // 
             // label2

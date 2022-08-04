@@ -29,6 +29,7 @@ namespace HastaneKayit
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbladsoyad = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@ namespace HastaneKayit
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lbldurum = new System.Windows.Forms.Label();
             this.btnkaydet = new System.Windows.Forms.Button();
-            this.btnguncelle = new System.Windows.Forms.Button();
             this.checkBoxDurum = new System.Windows.Forms.CheckBox();
             this.msktc = new System.Windows.Forms.MaskedTextBox();
             this.cmbdoktor = new System.Windows.Forms.ComboBox();
@@ -59,10 +59,15 @@ namespace HastaneKayit
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnduyurusil = new System.Windows.Forms.Button();
+            this.btnanaekran = new System.Windows.Forms.Button();
             this.btnrandevulistesi = new System.Windows.Forms.Button();
+            this.txtduyuruid = new System.Windows.Forms.TextBox();
             this.btnbranspaneli = new System.Windows.Forms.Button();
             this.btndoktor = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.btnduyuru = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -132,14 +137,14 @@ namespace HastaneKayit
             this.groupBox2.Controls.Add(this.richTextBox1);
             this.groupBox2.Location = new System.Drawing.Point(6, 118);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(206, 333);
+            this.groupBox2.Size = new System.Drawing.Size(206, 410);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Duyuru Oluştur";
             // 
             // btnduyuruolustur
             // 
-            this.btnduyuruolustur.Location = new System.Drawing.Point(40, 295);
+            this.btnduyuruolustur.Location = new System.Drawing.Point(49, 371);
             this.btnduyuruolustur.Name = "btnduyuruolustur";
             this.btnduyuruolustur.Size = new System.Drawing.Size(108, 32);
             this.btnduyuruolustur.TabIndex = 11;
@@ -151,7 +156,7 @@ namespace HastaneKayit
             // 
             this.richTextBox1.Location = new System.Drawing.Point(6, 19);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(188, 270);
+            this.richTextBox1.Size = new System.Drawing.Size(188, 342);
             this.richTextBox1.TabIndex = 10;
             this.richTextBox1.Text = "";
             // 
@@ -159,7 +164,6 @@ namespace HastaneKayit
             // 
             this.groupBox3.Controls.Add(this.lbldurum);
             this.groupBox3.Controls.Add(this.btnkaydet);
-            this.groupBox3.Controls.Add(this.btnguncelle);
             this.groupBox3.Controls.Add(this.checkBoxDurum);
             this.groupBox3.Controls.Add(this.msktc);
             this.groupBox3.Controls.Add(this.cmbdoktor);
@@ -191,24 +195,13 @@ namespace HastaneKayit
             // 
             // btnkaydet
             // 
-            this.btnkaydet.Location = new System.Drawing.Point(19, 200);
+            this.btnkaydet.Location = new System.Drawing.Point(56, 200);
             this.btnkaydet.Name = "btnkaydet";
-            this.btnkaydet.Size = new System.Drawing.Size(75, 23);
+            this.btnkaydet.Size = new System.Drawing.Size(113, 23);
             this.btnkaydet.TabIndex = 8;
             this.btnkaydet.Text = "Kaydet";
             this.btnkaydet.UseVisualStyleBackColor = true;
             this.btnkaydet.Click += new System.EventHandler(this.btnkaydet_Click);
-            // 
-            // btnguncelle
-            // 
-            this.btnguncelle.Enabled = false;
-            this.btnguncelle.Location = new System.Drawing.Point(100, 200);
-            this.btnguncelle.Name = "btnguncelle";
-            this.btnguncelle.Size = new System.Drawing.Size(75, 23);
-            this.btnguncelle.TabIndex = 9;
-            this.btnguncelle.Text = "Güncelle";
-            this.btnguncelle.UseVisualStyleBackColor = true;
-            this.btnguncelle.Click += new System.EventHandler(this.btnguncelle_Click);
             // 
             // checkBoxDurum
             // 
@@ -331,7 +324,7 @@ namespace HastaneKayit
             this.groupBox4.Controls.Add(this.dataGridView1);
             this.groupBox4.Location = new System.Drawing.Point(421, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(521, 210);
+            this.groupBox4.Size = new System.Drawing.Size(894, 208);
             this.groupBox4.TabIndex = 25;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Branşlar";
@@ -343,15 +336,15 @@ namespace HastaneKayit
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 16);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(515, 191);
+            this.dataGridView1.Size = new System.Drawing.Size(888, 189);
             this.dataGridView1.TabIndex = 0;
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.dataGridView2);
-            this.groupBox5.Location = new System.Drawing.Point(424, 228);
+            this.groupBox5.Location = new System.Drawing.Point(424, 226);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(518, 223);
+            this.groupBox5.Size = new System.Drawing.Size(891, 305);
             this.groupBox5.TabIndex = 26;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Doktorlar";
@@ -363,25 +356,51 @@ namespace HastaneKayit
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView2.Location = new System.Drawing.Point(3, 16);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(512, 204);
+            this.dataGridView2.Size = new System.Drawing.Size(885, 286);
             this.dataGridView2.TabIndex = 0;
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.btnduyuru);
+            this.groupBox6.Controls.Add(this.btnduyurusil);
+            this.groupBox6.Controls.Add(this.btnanaekran);
             this.groupBox6.Controls.Add(this.btnrandevulistesi);
+            this.groupBox6.Controls.Add(this.txtduyuruid);
             this.groupBox6.Controls.Add(this.btnbranspaneli);
             this.groupBox6.Controls.Add(this.btndoktor);
+            this.groupBox6.Controls.Add(this.label9);
+            this.groupBox6.Controls.Add(this.btnduyuru);
             this.groupBox6.Location = new System.Drawing.Point(218, 257);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(200, 194);
+            this.groupBox6.Size = new System.Drawing.Size(200, 274);
             this.groupBox6.TabIndex = 27;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Hızlı Erişim";
             // 
+            // btnduyurusil
+            // 
+            this.btnduyurusil.Location = new System.Drawing.Point(90, 241);
+            this.btnduyurusil.Name = "btnduyurusil";
+            this.btnduyurusil.Size = new System.Drawing.Size(45, 23);
+            this.btnduyurusil.TabIndex = 28;
+            this.btnduyurusil.Text = "SİL";
+            this.toolTip1.SetToolTip(this.btnduyurusil, "Duyuruyu silmek üzeresin");
+            this.btnduyurusil.UseVisualStyleBackColor = true;
+            this.btnduyurusil.Click += new System.EventHandler(this.btnduyurusil_Click);
+            // 
+            // btnanaekran
+            // 
+            this.btnanaekran.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnanaekran.Location = new System.Drawing.Point(6, 129);
+            this.btnanaekran.Name = "btnanaekran";
+            this.btnanaekran.Size = new System.Drawing.Size(188, 38);
+            this.btnanaekran.TabIndex = 28;
+            this.btnanaekran.Text = "ANA EKRANA DÖN";
+            this.btnanaekran.UseVisualStyleBackColor = false;
+            this.btnanaekran.Click += new System.EventHandler(this.btnanaekran_Click);
+            // 
             // btnrandevulistesi
             // 
-            this.btnrandevulistesi.Location = new System.Drawing.Point(56, 108);
+            this.btnrandevulistesi.Location = new System.Drawing.Point(56, 91);
             this.btnrandevulistesi.Name = "btnrandevulistesi";
             this.btnrandevulistesi.Size = new System.Drawing.Size(93, 32);
             this.btnrandevulistesi.TabIndex = 2;
@@ -389,9 +408,17 @@ namespace HastaneKayit
             this.btnrandevulistesi.UseVisualStyleBackColor = true;
             this.btnrandevulistesi.Click += new System.EventHandler(this.btnrandevulistesi_Click);
             // 
+            // txtduyuruid
+            // 
+            this.txtduyuruid.Location = new System.Drawing.Point(168, 222);
+            this.txtduyuruid.Multiline = true;
+            this.txtduyuruid.Name = "txtduyuruid";
+            this.txtduyuruid.Size = new System.Drawing.Size(32, 20);
+            this.txtduyuruid.TabIndex = 29;
+            // 
             // btnbranspaneli
             // 
-            this.btnbranspaneli.Location = new System.Drawing.Point(56, 70);
+            this.btnbranspaneli.Location = new System.Drawing.Point(56, 53);
             this.btnbranspaneli.Name = "btnbranspaneli";
             this.btnbranspaneli.Size = new System.Drawing.Size(93, 32);
             this.btnbranspaneli.TabIndex = 1;
@@ -401,7 +428,7 @@ namespace HastaneKayit
             // 
             // btndoktor
             // 
-            this.btndoktor.Location = new System.Drawing.Point(56, 32);
+            this.btndoktor.Location = new System.Drawing.Point(56, 15);
             this.btndoktor.Name = "btndoktor";
             this.btndoktor.Size = new System.Drawing.Size(93, 32);
             this.btndoktor.TabIndex = 0;
@@ -409,22 +436,37 @@ namespace HastaneKayit
             this.btndoktor.UseVisualStyleBackColor = true;
             this.btndoktor.Click += new System.EventHandler(this.btndoktor_Click);
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 225);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(161, 13);
+            this.label9.TabIndex = 28;
+            this.label9.Text = "Silmek İstediğin Duyurunun ID\'si:";
+            // 
             // btnduyuru
             // 
-            this.btnduyuru.Location = new System.Drawing.Point(56, 146);
+            this.btnduyuru.Location = new System.Drawing.Point(56, 173);
             this.btnduyuru.Name = "btnduyuru";
-            this.btnduyuru.Size = new System.Drawing.Size(93, 32);
+            this.btnduyuru.Size = new System.Drawing.Size(93, 49);
             this.btnduyuru.TabIndex = 3;
             this.btnduyuru.Text = "Duyurular";
             this.btnduyuru.UseVisualStyleBackColor = true;
             this.btnduyuru.Click += new System.EventHandler(this.btnduyuru_Click);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
+            this.toolTip1.ToolTipTitle = "Önemli";
             // 
             // FrmSekreterDetay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(954, 463);
+            this.ClientSize = new System.Drawing.Size(1327, 537);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -446,6 +488,7 @@ namespace HastaneKayit
             this.groupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -475,7 +518,6 @@ namespace HastaneKayit
         private System.Windows.Forms.ComboBox cmbdoktor;
         private System.Windows.Forms.MaskedTextBox msksaat;
         private System.Windows.Forms.Button btnkaydet;
-        private System.Windows.Forms.Button btnguncelle;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.GroupBox groupBox5;
@@ -486,5 +528,10 @@ namespace HastaneKayit
         private System.Windows.Forms.Button btndoktor;
         private System.Windows.Forms.Label lbldurum;
         private System.Windows.Forms.Button btnduyuru;
+        private System.Windows.Forms.Button btnanaekran;
+        private System.Windows.Forms.Button btnduyurusil;
+        private System.Windows.Forms.TextBox txtduyuruid;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

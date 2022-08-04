@@ -27,9 +27,9 @@ namespace HastaneKayit
         private void btngiris_Click(object sender, EventArgs e)
         {
             SqlCommand komut = new SqlCommand("select * from Tbl_Hastalar where " +
-                                              "Hastatc=@p1 and Hastasifre=@p2", bgl.baglanti());
+                                              "Hastatc=@p1", bgl.baglanti());
             komut.Parameters.AddWithValue("@p1", msktc.Text);
-            komut.Parameters.AddWithValue("@p2", txtsifre.Text);
+            //komut.Parameters.AddWithValue("@p2", txtsifre.Text); hastadan şifreyi sildik
             SqlDataReader dr = komut.ExecuteReader();
 
             if (dr.Read())
@@ -42,7 +42,6 @@ namespace HastaneKayit
             else
             {
                 MessageBox.Show("Hatalı giriş","Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtsifre.Text = null;
                 msktc.Focus();
             }
             bgl.baglanti().Close();

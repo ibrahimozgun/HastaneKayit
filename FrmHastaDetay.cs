@@ -22,6 +22,7 @@ namespace HastaneKayit
 
         private void FrmHastaDetay_Load(object sender, EventArgs e)
         {
+            lbltarih.Text = DateTime.Now.ToShortDateString(); // sadece tarih
             lbltc.Text = tc;
             //komut1 ad soyad çekme
             SqlCommand komut1 = new SqlCommand("select Hastaad, Hastasoyad From Tbl_Hastalar where Hastatc="+lbltc.Text, bgl.baglanti());           
@@ -130,6 +131,13 @@ namespace HastaneKayit
             cmbdoktor.Text = null;
             richtxtsikayet.Clear();
             cmbbrans.Focus();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmGirisler frm = new FrmGirisler();
+            this.Close();
+            frm.Show();
         }
     }
 }

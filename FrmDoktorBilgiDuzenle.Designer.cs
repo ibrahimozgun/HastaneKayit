@@ -29,6 +29,7 @@ namespace HastaneKayit
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.msktc = new System.Windows.Forms.MaskedTextBox();
             this.txtsifre = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -40,6 +41,12 @@ namespace HastaneKayit
             this.btnguncelle = new System.Windows.Forms.Button();
             this.cmbbrans = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.txtemail = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.msktelefon = new System.Windows.Forms.MaskedTextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
+            this.lblbilgi = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // msktc
@@ -48,21 +55,23 @@ namespace HastaneKayit
             this.msktc.Mask = "00000000000";
             this.msktc.Name = "msktc";
             this.msktc.ReadOnly = true;
-            this.msktc.Size = new System.Drawing.Size(100, 20);
+            this.msktc.Size = new System.Drawing.Size(148, 20);
             this.msktc.TabIndex = 3;
             this.msktc.ValidatingType = typeof(int);
             // 
             // txtsifre
             // 
-            this.txtsifre.Location = new System.Drawing.Point(63, 131);
+            this.txtsifre.Location = new System.Drawing.Point(63, 183);
+            this.txtsifre.MaxLength = 10;
             this.txtsifre.Name = "txtsifre";
-            this.txtsifre.Size = new System.Drawing.Size(100, 20);
+            this.txtsifre.Size = new System.Drawing.Size(148, 20);
             this.txtsifre.TabIndex = 5;
+            this.txtsifre.TextChanged += new System.EventHandler(this.txtsifre_TextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(26, 134);
+            this.label5.Location = new System.Drawing.Point(26, 186);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(31, 13);
             this.label5.TabIndex = 21;
@@ -81,7 +90,7 @@ namespace HastaneKayit
             // 
             this.txtsoyad.Location = new System.Drawing.Point(63, 78);
             this.txtsoyad.Name = "txtsoyad";
-            this.txtsoyad.Size = new System.Drawing.Size(100, 20);
+            this.txtsoyad.Size = new System.Drawing.Size(148, 20);
             this.txtsoyad.TabIndex = 2;
             // 
             // label2
@@ -97,7 +106,7 @@ namespace HastaneKayit
             // 
             this.txtad.Location = new System.Drawing.Point(63, 52);
             this.txtad.Name = "txtad";
-            this.txtad.Size = new System.Drawing.Size(100, 20);
+            this.txtad.Size = new System.Drawing.Size(148, 20);
             this.txtad.TabIndex = 1;
             // 
             // label1
@@ -111,11 +120,12 @@ namespace HastaneKayit
             // 
             // btnguncelle
             // 
-            this.btnguncelle.Location = new System.Drawing.Point(63, 157);
+            this.btnguncelle.Location = new System.Drawing.Point(63, 263);
             this.btnguncelle.Name = "btnguncelle";
-            this.btnguncelle.Size = new System.Drawing.Size(100, 23);
+            this.btnguncelle.Size = new System.Drawing.Size(148, 23);
             this.btnguncelle.TabIndex = 29;
             this.btnguncelle.Text = "Güncelle";
+            this.toolTip2.SetToolTip(this.btnguncelle, "Günceller");
             this.btnguncelle.UseVisualStyleBackColor = true;
             this.btnguncelle.Click += new System.EventHandler(this.btnguncelle_Click);
             // 
@@ -124,7 +134,7 @@ namespace HastaneKayit
             this.cmbbrans.FormattingEnabled = true;
             this.cmbbrans.Location = new System.Drawing.Point(63, 104);
             this.cmbbrans.Name = "cmbbrans";
-            this.cmbbrans.Size = new System.Drawing.Size(100, 21);
+            this.cmbbrans.Size = new System.Drawing.Size(148, 21);
             this.cmbbrans.TabIndex = 4;
             // 
             // label4
@@ -136,12 +146,70 @@ namespace HastaneKayit
             this.label4.TabIndex = 31;
             this.label4.Text = "Branş:";
             // 
+            // txtemail
+            // 
+            this.txtemail.Location = new System.Drawing.Point(63, 157);
+            this.txtemail.Name = "txtemail";
+            this.txtemail.Size = new System.Drawing.Size(148, 20);
+            this.txtemail.TabIndex = 35;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(18, 160);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 13);
+            this.label7.TabIndex = 34;
+            this.label7.Text = "E-Mail:";
+            // 
+            // msktelefon
+            // 
+            this.msktelefon.Location = new System.Drawing.Point(63, 131);
+            this.msktelefon.Mask = "(999) 000-0000";
+            this.msktelefon.Name = "msktelefon";
+            this.msktelefon.Size = new System.Drawing.Size(148, 20);
+            this.msktelefon.TabIndex = 32;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(11, 134);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(46, 13);
+            this.label6.TabIndex = 33;
+            this.label6.Text = "Telefon:";
+            // 
+            // toolTip2
+            // 
+            this.toolTip2.IsBalloon = true;
+            this.toolTip2.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTip2.ToolTipTitle = "Bilgilendirme";
+            // 
+            // lblbilgi
+            // 
+            this.lblbilgi.AutoSize = true;
+            this.lblbilgi.BackColor = System.Drawing.SystemColors.Control;
+            this.lblbilgi.Font = new System.Drawing.Font("Times New Roman", 8.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+                | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblbilgi.ForeColor = System.Drawing.Color.Red;
+            this.lblbilgi.Location = new System.Drawing.Point(60, 206);
+            this.lblbilgi.MaximumSize = new System.Drawing.Size(160, 220);
+            this.lblbilgi.Name = "lblbilgi";
+            this.lblbilgi.Size = new System.Drawing.Size(158, 28);
+            this.lblbilgi.TabIndex = 36;
+            this.lblbilgi.Text = "Büyük harf, küçük harf, sembol veya rakam eksik";
+            // 
             // FrmDoktorBilgiDuzenle
             // 
             this.AcceptButton = this.btnguncelle;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(204, 238);
+            this.ClientSize = new System.Drawing.Size(237, 298);
+            this.Controls.Add(this.lblbilgi);
+            this.Controls.Add(this.txtemail);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.msktelefon);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cmbbrans);
             this.Controls.Add(this.btnguncelle);
@@ -175,5 +243,11 @@ namespace HastaneKayit
         private System.Windows.Forms.Button btnguncelle;
         private System.Windows.Forms.ComboBox cmbbrans;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtemail;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.MaskedTextBox msktelefon;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ToolTip toolTip2;
+        private System.Windows.Forms.Label lblbilgi;
     }
 }

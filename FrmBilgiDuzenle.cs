@@ -31,15 +31,15 @@ namespace HastaneKayit
                 txtad.Text = dr1[1].ToString();
                 txtsoyad.Text = dr1[2].ToString();
                 msktelefon.Text = dr1[4].ToString();
-                txtsifre.Text = dr1[5].ToString();
-                cmbcinsiyet.Text = dr1[6].ToString();
+                cmbcinsiyet.Text = dr1[5].ToString();
+                //txtsifre.Text = dr1[5].ToString(); hastadan şifreyi kaldırdık
             }
             bg.baglanti().Close();
         }
 
         private void btnguncelle_Click(object sender, EventArgs e)
         {
-            if(txtad.Text=="" || txtsoyad.Text=="" || txtsifre.Text=="" || 
+            if(txtad.Text=="" || txtsoyad.Text=="" || 
                msktc.Text=="" || msktelefon.Text=="" || cmbcinsiyet.Text == "")
             {
                 MessageBox.Show("Kaydedilmedi\nBoş bir alan var","Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -47,16 +47,16 @@ namespace HastaneKayit
             else
             {
                 SqlCommand komut = new SqlCommand("update Tbl_Hastalar set Hastaad=@p1, Hastasoyad=@p2, " +
-                "Hastatelefon=@p3, Hastasifre=@p4, Hastacinsiyet=@p5 where Hastatc=@p6", bg.baglanti());
+                "Hastatelefon=@p3, Hastacinsiyet=@p5 where Hastatc=@p6", bg.baglanti());
                 komut.Parameters.AddWithValue("@p1", txtad.Text);
                 komut.Parameters.AddWithValue("@p2", txtsoyad.Text);
                 komut.Parameters.AddWithValue("@p3", msktelefon.Text);
-                komut.Parameters.AddWithValue("@p4", txtsifre.Text);
+                //komut.Parameters.AddWithValue("@p4", txtsifre.Text);
                 komut.Parameters.AddWithValue("@p5", cmbcinsiyet.Text);
                 komut.Parameters.AddWithValue("@p6", msktc.Text);
                 komut.ExecuteNonQuery();
                 bg.baglanti().Close();
-                MessageBox.Show("Kayıt Güncellendi.\nŞifreniz: " + txtsifre.Text, "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Kayıt Güncellendi.","Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             bg.baglanti().Close();

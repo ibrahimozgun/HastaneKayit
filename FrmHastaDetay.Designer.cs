@@ -50,6 +50,8 @@ namespace HastaneKayit
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.btnanaekran = new System.Windows.Forms.Button();
+            this.lbltarih = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -231,9 +233,9 @@ namespace HastaneKayit
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dataGridView1);
-            this.groupBox3.Location = new System.Drawing.Point(218, 12);
+            this.groupBox3.Location = new System.Drawing.Point(221, 25);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(548, 152);
+            this.groupBox3.Size = new System.Drawing.Size(548, 167);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Randevu Geçmişi";
@@ -245,13 +247,13 @@ namespace HastaneKayit
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 16);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(542, 133);
+            this.dataGridView1.Size = new System.Drawing.Size(542, 148);
             this.dataGridView1.TabIndex = 0;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.dataGridView2);
-            this.groupBox4.Location = new System.Drawing.Point(218, 169);
+            this.groupBox4.Location = new System.Drawing.Point(218, 198);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(548, 174);
             this.groupBox4.TabIndex = 5;
@@ -269,11 +271,33 @@ namespace HastaneKayit
             this.dataGridView2.TabIndex = 0;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             // 
+            // btnanaekran
+            // 
+            this.btnanaekran.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnanaekran.Location = new System.Drawing.Point(11, 349);
+            this.btnanaekran.Name = "btnanaekran";
+            this.btnanaekran.Size = new System.Drawing.Size(195, 23);
+            this.btnanaekran.TabIndex = 6;
+            this.btnanaekran.Text = "ANA EKRAN DÖN";
+            this.btnanaekran.UseVisualStyleBackColor = false;
+            this.btnanaekran.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lbltarih
+            // 
+            this.lbltarih.AutoSize = true;
+            this.lbltarih.Location = new System.Drawing.Point(713, 9);
+            this.lbltarih.Name = "lbltarih";
+            this.lbltarih.Size = new System.Drawing.Size(35, 13);
+            this.lbltarih.TabIndex = 1;
+            this.lbltarih.Text = "label4";
+            // 
             // FrmHastaDetay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 353);
+            this.ClientSize = new System.Drawing.Size(778, 378);
+            this.Controls.Add(this.lbltarih);
+            this.Controls.Add(this.btnanaekran);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -291,6 +315,7 @@ namespace HastaneKayit
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -317,5 +342,7 @@ namespace HastaneKayit
         private System.Windows.Forms.TextBox txtid;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button txttemizle;
+        private System.Windows.Forms.Button btnanaekran;
+        private System.Windows.Forms.Label lbltarih;
     }
 }

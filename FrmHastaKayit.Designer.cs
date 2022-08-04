@@ -35,8 +35,6 @@ namespace HastaneKayit
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtsifre = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.cmbcinsiyet = new System.Windows.Forms.ComboBox();
             this.msktc = new System.Windows.Forms.MaskedTextBox();
@@ -94,26 +92,10 @@ namespace HastaneKayit
             this.label4.TabIndex = 6;
             this.label4.Text = "Telefon:";
             // 
-            // txtsifre
-            // 
-            this.txtsifre.Location = new System.Drawing.Point(82, 133);
-            this.txtsifre.Name = "txtsifre";
-            this.txtsifre.Size = new System.Drawing.Size(100, 20);
-            this.txtsifre.TabIndex = 5;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(45, 136);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Şifre:";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(30, 162);
+            this.label6.Location = new System.Drawing.Point(30, 136);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(46, 13);
             this.label6.TabIndex = 10;
@@ -125,7 +107,7 @@ namespace HastaneKayit
             this.cmbcinsiyet.Items.AddRange(new object[] {
             "Erkek",
             "Kadın"});
-            this.cmbcinsiyet.Location = new System.Drawing.Point(82, 159);
+            this.cmbcinsiyet.Location = new System.Drawing.Point(82, 133);
             this.cmbcinsiyet.Name = "cmbcinsiyet";
             this.cmbcinsiyet.Size = new System.Drawing.Size(100, 21);
             this.cmbcinsiyet.TabIndex = 6;
@@ -149,7 +131,7 @@ namespace HastaneKayit
             // 
             // btnkayityap
             // 
-            this.btnkayityap.Location = new System.Drawing.Point(65, 187);
+            this.btnkayityap.Location = new System.Drawing.Point(65, 161);
             this.btnkayityap.Name = "btnkayityap";
             this.btnkayityap.Size = new System.Drawing.Size(75, 23);
             this.btnkayityap.TabIndex = 7;
@@ -168,8 +150,6 @@ namespace HastaneKayit
             this.Controls.Add(this.msktc);
             this.Controls.Add(this.cmbcinsiyet);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtsifre);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtsoyad);
@@ -179,7 +159,6 @@ namespace HastaneKayit
             this.Name = "FrmHastaKayit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hasta Kayıt";
-            this.Load += new System.EventHandler(this.FrmHastaKayit_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,8 +172,6 @@ namespace HastaneKayit
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtsifre;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbcinsiyet;
         private System.Windows.Forms.MaskedTextBox msktc;

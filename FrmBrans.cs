@@ -21,6 +21,7 @@ namespace HastaneKayit
         sqlbaglantısı bgl = new sqlbaglantısı();
         private void FrmBrans_Load(object sender, EventArgs e)
         {
+            btnguncelle.Enabled = false;
             DataTable dt1 = new DataTable();
             SqlDataAdapter da1 = new SqlDataAdapter("Select *From Tbl_Branslar", bgl.baglanti());
             da1.Fill(dt1);
@@ -31,6 +32,7 @@ namespace HastaneKayit
 
         private void dataGridView1_Click(object sender, EventArgs e)
         {
+            btnguncelle.Enabled = true;
             int secilen = dataGridView1.SelectedCells[0].RowIndex; //seçilen hücrenin 0ıncı indexinin data gridini alır 
             txtid.Text = dataGridView1.Rows[secilen].Cells[0].Value.ToString(); //row=satır cell=hücre
             txtad.Text = dataGridView1.Rows[secilen].Cells[1].Value.ToString();
@@ -51,6 +53,8 @@ namespace HastaneKayit
                 bgl.baglanti().Close();
                 MessageBox.Show(txtad.Text + " Branşı Eklendi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 FrmBrans_Load(sender, e);
+                txtad.Text = null;
+                txtid.Text = null;
             }
         }
 
@@ -70,6 +74,8 @@ namespace HastaneKayit
                 bgl.baglanti().Close();
                 MessageBox.Show("Güncellendi","Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 FrmBrans_Load(sender, e);
+                txtad.Text = null;
+                txtid.Text = null;
             }
         }
 
@@ -82,12 +88,17 @@ namespace HastaneKayit
             }
             else
             {
-                SqlCommand komut = new SqlCommand("delete From Tbl_Branslar where Bransid=@p1", bgl.baglanti());
-                komut.Parameters.AddWithValue("@p1", txtid.Text);
-                komut.ExecuteNonQuery();
-                bgl.baglanti().Close();
-                MessageBox.Show(txtid.Text+" ID li branş silindi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                FrmBrans_Load(sender, e);
+                if(MessageBox.Show(txtid.Text+" ID'li branşı silmek istiyor musunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    SqlCommand komut = new SqlCommand("delete From Tbl_Branslar where Bransid=@p1", bgl.baglanti());
+                    komut.Parameters.AddWithValue("@p1", txtid.Text);
+                    komut.ExecuteNonQuery();
+                    bgl.baglanti().Close();
+                    //MessageBox.Show(txtid.Text + " ID li branş silindi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    FrmBrans_Load(sender, e);
+                    txtad.Text = null;
+                    txtid.Text = null;
+                }
             }
         }
     }

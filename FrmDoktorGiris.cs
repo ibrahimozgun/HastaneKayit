@@ -31,6 +31,7 @@ namespace HastaneKayit
                 frd.TC = msktc.Text;
                 frd.Show();
                 this.Close();
+                frd.tarihler(); //doktor detayda comboBox'a randevuların tarihlerini yüklüyor
             }
             else
             {
@@ -38,6 +39,7 @@ namespace HastaneKayit
                 txtsifre.Clear();
                 msktc.Focus();
             }
+            bgl.baglanti().Close();
         }
 
         private void btngeri_Click(object sender, EventArgs e)

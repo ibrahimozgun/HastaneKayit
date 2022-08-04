@@ -34,8 +34,6 @@ namespace HastaneKayit
             this.msktc = new System.Windows.Forms.MaskedTextBox();
             this.cmbcinsiyet = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtsifre = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtsoyad = new System.Windows.Forms.TextBox();
@@ -46,7 +44,7 @@ namespace HastaneKayit
             // 
             // btnguncelle
             // 
-            this.btnguncelle.Location = new System.Drawing.Point(56, 168);
+            this.btnguncelle.Location = new System.Drawing.Point(56, 142);
             this.btnguncelle.Name = "btnguncelle";
             this.btnguncelle.Size = new System.Drawing.Size(100, 23);
             this.btnguncelle.TabIndex = 28;
@@ -77,7 +75,7 @@ namespace HastaneKayit
             this.cmbcinsiyet.Items.AddRange(new object[] {
             "Erkek",
             "Kadın"});
-            this.cmbcinsiyet.Location = new System.Drawing.Point(56, 141);
+            this.cmbcinsiyet.Location = new System.Drawing.Point(56, 115);
             this.cmbcinsiyet.Name = "cmbcinsiyet";
             this.cmbcinsiyet.Size = new System.Drawing.Size(100, 21);
             this.cmbcinsiyet.TabIndex = 6;
@@ -85,27 +83,11 @@ namespace HastaneKayit
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(4, 144);
+            this.label6.Location = new System.Drawing.Point(4, 118);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(46, 13);
             this.label6.TabIndex = 24;
             this.label6.Text = "Cinsiyet:";
-            // 
-            // txtsifre
-            // 
-            this.txtsifre.Location = new System.Drawing.Point(56, 115);
-            this.txtsifre.Name = "txtsifre";
-            this.txtsifre.Size = new System.Drawing.Size(100, 20);
-            this.txtsifre.TabIndex = 5;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(19, 118);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 13);
-            this.label5.TabIndex = 22;
-            this.label5.Text = "Şifre:";
             // 
             // label4
             // 
@@ -168,8 +150,6 @@ namespace HastaneKayit
             this.Controls.Add(this.msktc);
             this.Controls.Add(this.cmbcinsiyet);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtsifre);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtsoyad);
@@ -192,8 +172,6 @@ namespace HastaneKayit
         private System.Windows.Forms.MaskedTextBox msktc;
         private System.Windows.Forms.ComboBox cmbcinsiyet;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtsifre;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtsoyad;

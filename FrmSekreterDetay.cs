@@ -21,7 +21,7 @@ namespace HastaneKayit
         public string tc; //giriş ekranından çekebilmek için
         private void FrmSekreterDetay_Load(object sender, EventArgs e)
         {
-            lbldurum.Text = "0";            
+            lbldurum.Text = "0";
             lbltc.Text = tc; //giriş ekranından tc yi çekme
 
             //giriş ekranından isim soyisim çekme
@@ -31,9 +31,9 @@ namespace HastaneKayit
             while (dr1.Read())
             {
                 lbladsoyad.Text = dr1[0].ToString();
+                //doktor paneline sekreterin isim ve soyismini aktarıyoruz
             }
             bgl.baglanti().Close();
-
 
             //branşları görüntüleme DataGridView de
             DataTable dt1 = new DataTable();
@@ -50,23 +50,20 @@ namespace HastaneKayit
             SqlDataAdapter da2 = new SqlDataAdapter("Select *From Tbl_Doktorlar", bgl.baglanti());
             da2.Fill(dt2);
             dataGridView2.DataSource = dt2;
-
             //kolonları(sütunları) sıralama
-            /*dataGridView2.Columns[1].DisplayIndex = 0;
-            dataGridView2.Columns[2].DisplayIndex = 1;
-            dataGridView2.Columns[3].DisplayIndex = 2;
-            dataGridView2.Columns[4].DisplayIndex = 3;
-            dataGridView2.Columns[5].DisplayIndex = 4;*/
-            dataGridView2.Columns[0].DisplayIndex = 5;
-
+            dataGridView2.Columns[0].DisplayIndex = 9;
             //kolonları isimlendirme
-            dataGridView2.Columns[0].HeaderText = "ID";           
-            dataGridView2.Columns[1].HeaderText = "İsim";           
-            dataGridView2.Columns[2].HeaderText = "Soyisim";          
-            dataGridView2.Columns[3].HeaderText = "Branş";           
-            dataGridView2.Columns[4].HeaderText = "TC";            
+            dataGridView2.Columns[0].HeaderText = "ID";
+            dataGridView2.Columns[1].HeaderText = "İsim";
+            dataGridView2.Columns[2].HeaderText = "Soyisim";
+            dataGridView2.Columns[3].HeaderText = "Branş";
+            dataGridView2.Columns[4].HeaderText = "TC";
             dataGridView2.Columns[5].HeaderText = "Şifre";
-
+            dataGridView2.Columns[6].HeaderText = "Telefon";
+            dataGridView2.Columns[7].HeaderText = "E-Mail";
+            dataGridView2.Columns[8].HeaderText = "Kayıt Tarihi";
+            dataGridView2.Columns[9].HeaderText = "Kaydeden Sekreter";
+            dataGridView2.Columns[0].Width = 35; //ıd nın uzunluğu
 
 
             //branşları çekme combobox a
@@ -96,7 +93,7 @@ namespace HastaneKayit
 
         private void btnkaydet_Click(object sender, EventArgs e)
         {
-            if(checkBoxDurum.Checked==true) //doktor dolu olacak ise hasta tc istiyor
+            if (checkBoxDurum.Checked == true) //doktor dolu olacak ise hasta tc istiyor
             {
                 if (msktarih.Text == "  .  ." || msksaat.Text == "  :" || cmbbrans.Text == "" || cmbdoktor.Text == "" || msktc.Text == "")
                 {
@@ -133,7 +130,7 @@ namespace HastaneKayit
                     MessageBox.Show("Eksik var", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     msktarih.Focus();
                 }
-                else if(msktc.Text != "")
+                else if (msktc.Text != "")
                 {
                     MessageBox.Show("Boş randevu için hasta tc girmeyin", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     msktc.Focus();
@@ -160,7 +157,7 @@ namespace HastaneKayit
                     msktarih.Focus();
                 }
             }
-            
+
         }
 
         private void checkBoxDurum_CheckedChanged(object sender, EventArgs e)
@@ -178,6 +175,7 @@ namespace HastaneKayit
         private void btndoktor_Click(object sender, EventArgs e)
         {
             FrmDoktorPaneli frd = new FrmDoktorPaneli();
+            frd.sekreterisim = lbladsoyad.Text;
             frd.Show();
         }
 
@@ -195,23 +193,50 @@ namespace HastaneKayit
 
         private void btnduyuruolustur_Click(object sender, EventArgs e)
         {
-            SqlCommand komut = new SqlCommand("insert into Tbl_Duyurular (Duyuru) values (@p1)", bgl.baglanti());
-            komut.Parameters.AddWithValue("@p1", richTextBox1.Text);
-            komut.ExecuteNonQuery();
-            bgl.baglanti().Close();
-            MessageBox.Show("Duyuru oluştu", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            richTextBox1.Text = null;
+            if (richTextBox1.Text=="")
+            {
+                MessageBox.Show("Boş duyuru oluşturulamaz", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                richTextBox1.Focus();
+            }
+            else
+            {
+                SqlCommand komut = new SqlCommand("insert into Tbl_Duyurular (Duyuru) values (@p1)", bgl.baglanti());
+                komut.Parameters.AddWithValue("@p1", richTextBox1.Text);
+                komut.ExecuteNonQuery();
+                bgl.baglanti().Close();
+                MessageBox.Show("Duyuru oluştu", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                richTextBox1.Text = null;
+            } 
         }
-
-        private void btnguncelle_Click(object sender, EventArgs e)
-        {
-            //randevu listesinden veri gelecek
-        }
-
         private void btnduyuru_Click(object sender, EventArgs e)
         {
             FrmDuyurular frd = new FrmDuyurular();
             frd.Show();
+        }
+
+        private void btnanaekran_Click(object sender, EventArgs e)
+        {
+            FrmGirisler frm = new FrmGirisler();
+            this.Close();
+            frm.Show();
+        }
+
+        private void btnduyurusil_Click(object sender, EventArgs e)
+        {
+            if (txtduyuruid.Text == "" || txtduyuruid.Text == null)
+            {
+                MessageBox.Show("Silmek istediğin duyurunun ID'sini gir", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                msktc.Focus();
+            }
+            else
+            {
+                SqlCommand komutsil = new SqlCommand("delete From Tbl_Duyurular where Duyuruid=@p1", bgl.baglanti());
+                komutsil.Parameters.AddWithValue("@p1", txtduyuruid.Text);
+                komutsil.ExecuteNonQuery();
+                MessageBox.Show(txtduyuruid.Text + " ID numaralı duyuru silindi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtduyuruid.Clear();
+                bgl.baglanti().Close();
+            }
         }
     }
 }

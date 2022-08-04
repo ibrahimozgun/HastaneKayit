@@ -44,9 +44,9 @@ namespace HastaneKayit
             // 
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(176, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(263, 12);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(336, 205);
+            this.dataGridView1.Size = new System.Drawing.Size(359, 205);
             this.dataGridView1.TabIndex = 27;
             this.dataGridView1.Click += new System.EventHandler(this.dataGridView1_Click);
             // 
@@ -54,7 +54,7 @@ namespace HastaneKayit
             // 
             this.btnguncelle.Location = new System.Drawing.Point(70, 137);
             this.btnguncelle.Name = "btnguncelle";
-            this.btnguncelle.Size = new System.Drawing.Size(100, 23);
+            this.btnguncelle.Size = new System.Drawing.Size(187, 23);
             this.btnguncelle.TabIndex = 26;
             this.btnguncelle.Text = "Güncelle";
             this.btnguncelle.UseVisualStyleBackColor = true;
@@ -62,9 +62,9 @@ namespace HastaneKayit
             // 
             // btnsil
             // 
-            this.btnsil.Location = new System.Drawing.Point(125, 108);
+            this.btnsil.Location = new System.Drawing.Point(165, 108);
             this.btnsil.Name = "btnsil";
-            this.btnsil.Size = new System.Drawing.Size(45, 23);
+            this.btnsil.Size = new System.Drawing.Size(92, 23);
             this.btnsil.TabIndex = 25;
             this.btnsil.Text = "Sil";
             this.btnsil.UseVisualStyleBackColor = true;
@@ -74,7 +74,7 @@ namespace HastaneKayit
             // 
             this.btnekle.Location = new System.Drawing.Point(70, 108);
             this.btnekle.Name = "btnekle";
-            this.btnekle.Size = new System.Drawing.Size(45, 23);
+            this.btnekle.Size = new System.Drawing.Size(92, 23);
             this.btnekle.TabIndex = 24;
             this.btnekle.Text = "Ekle";
             this.btnekle.UseVisualStyleBackColor = true;
@@ -84,7 +84,7 @@ namespace HastaneKayit
             // 
             this.txtid.Location = new System.Drawing.Point(70, 56);
             this.txtid.Name = "txtid";
-            this.txtid.Size = new System.Drawing.Size(100, 20);
+            this.txtid.Size = new System.Drawing.Size(187, 20);
             this.txtid.TabIndex = 1;
             // 
             // label2
@@ -100,7 +100,7 @@ namespace HastaneKayit
             // 
             this.txtad.Location = new System.Drawing.Point(70, 82);
             this.txtad.Name = "txtad";
-            this.txtad.Size = new System.Drawing.Size(100, 20);
+            this.txtad.Size = new System.Drawing.Size(187, 20);
             this.txtad.TabIndex = 2;
             // 
             // label1
@@ -116,7 +116,7 @@ namespace HastaneKayit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 229);
+            this.ClientSize = new System.Drawing.Size(634, 229);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnguncelle);
             this.Controls.Add(this.btnsil);
