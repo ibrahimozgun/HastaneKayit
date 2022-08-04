@@ -29,6 +29,7 @@ namespace HastaneKayit
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmHastaKayit));
             this.label1 = new System.Windows.Forms.Label();
             this.txtad = new System.Windows.Forms.TextBox();
             this.txtsoyad = new System.Windows.Forms.TextBox();
@@ -40,6 +41,7 @@ namespace HastaneKayit
             this.msktc = new System.Windows.Forms.MaskedTextBox();
             this.msktelefon = new System.Windows.Forms.MaskedTextBox();
             this.btnkayityap = new System.Windows.Forms.Button();
+            this.btnGeri = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -55,14 +57,14 @@ namespace HastaneKayit
             // 
             this.txtad.Location = new System.Drawing.Point(82, 29);
             this.txtad.Name = "txtad";
-            this.txtad.Size = new System.Drawing.Size(100, 20);
+            this.txtad.Size = new System.Drawing.Size(129, 20);
             this.txtad.TabIndex = 1;
             // 
             // txtsoyad
             // 
             this.txtsoyad.Location = new System.Drawing.Point(82, 55);
             this.txtsoyad.Name = "txtsoyad";
-            this.txtsoyad.Size = new System.Drawing.Size(100, 20);
+            this.txtsoyad.Size = new System.Drawing.Size(129, 20);
             this.txtsoyad.TabIndex = 2;
             // 
             // label2
@@ -79,9 +81,9 @@ namespace HastaneKayit
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(53, 84);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(23, 13);
+            this.label3.Size = new System.Drawing.Size(24, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Tc:";
+            this.label3.Text = "TC:";
             // 
             // label4
             // 
@@ -103,13 +105,14 @@ namespace HastaneKayit
             // 
             // cmbcinsiyet
             // 
+            this.cmbcinsiyet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbcinsiyet.FormattingEnabled = true;
             this.cmbcinsiyet.Items.AddRange(new object[] {
             "Erkek",
             "Kadın"});
             this.cmbcinsiyet.Location = new System.Drawing.Point(82, 133);
             this.cmbcinsiyet.Name = "cmbcinsiyet";
-            this.cmbcinsiyet.Size = new System.Drawing.Size(100, 21);
+            this.cmbcinsiyet.Size = new System.Drawing.Size(129, 21);
             this.cmbcinsiyet.TabIndex = 6;
             // 
             // msktc
@@ -117,7 +120,7 @@ namespace HastaneKayit
             this.msktc.Location = new System.Drawing.Point(82, 81);
             this.msktc.Mask = "00000000000";
             this.msktc.Name = "msktc";
-            this.msktc.Size = new System.Drawing.Size(100, 20);
+            this.msktc.Size = new System.Drawing.Size(129, 20);
             this.msktc.TabIndex = 3;
             this.msktc.ValidatingType = typeof(int);
             // 
@@ -126,25 +129,36 @@ namespace HastaneKayit
             this.msktelefon.Location = new System.Drawing.Point(82, 107);
             this.msktelefon.Mask = "(999) 000-0000";
             this.msktelefon.Name = "msktelefon";
-            this.msktelefon.Size = new System.Drawing.Size(100, 20);
+            this.msktelefon.Size = new System.Drawing.Size(129, 20);
             this.msktelefon.TabIndex = 4;
             // 
             // btnkayityap
             // 
-            this.btnkayityap.Location = new System.Drawing.Point(65, 161);
+            this.btnkayityap.Location = new System.Drawing.Point(82, 160);
             this.btnkayityap.Name = "btnkayityap";
-            this.btnkayityap.Size = new System.Drawing.Size(75, 23);
+            this.btnkayityap.Size = new System.Drawing.Size(129, 32);
             this.btnkayityap.TabIndex = 7;
             this.btnkayityap.Text = "Kayıt Yap";
             this.btnkayityap.UseVisualStyleBackColor = true;
             this.btnkayityap.Click += new System.EventHandler(this.btnkayityap_Click);
+            // 
+            // btnGeri
+            // 
+            this.btnGeri.Location = new System.Drawing.Point(12, 187);
+            this.btnGeri.Name = "btnGeri";
+            this.btnGeri.Size = new System.Drawing.Size(46, 23);
+            this.btnGeri.TabIndex = 11;
+            this.btnGeri.Text = "GERİ";
+            this.btnGeri.UseVisualStyleBackColor = true;
+            this.btnGeri.Click += new System.EventHandler(this.btnGeri_Click);
             // 
             // FrmHastaKayit
             // 
             this.AcceptButton = this.btnkayityap;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(233, 222);
+            this.ClientSize = new System.Drawing.Size(255, 222);
+            this.Controls.Add(this.btnGeri);
             this.Controls.Add(this.btnkayityap);
             this.Controls.Add(this.msktelefon);
             this.Controls.Add(this.msktc);
@@ -156,9 +170,11 @@ namespace HastaneKayit
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtad);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmHastaKayit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hasta Kayıt";
+            this.Load += new System.EventHandler(this.FrmHastaKayit_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -177,5 +193,6 @@ namespace HastaneKayit
         private System.Windows.Forms.MaskedTextBox msktc;
         private System.Windows.Forms.MaskedTextBox msktelefon;
         private System.Windows.Forms.Button btnkayityap;
+        private System.Windows.Forms.Button btnGeri;
     }
 }

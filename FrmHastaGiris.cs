@@ -26,7 +26,7 @@ namespace HastaneKayit
 
         private void btngiris_Click(object sender, EventArgs e)
         {
-            SqlCommand komut = new SqlCommand("select * from Tbl_Hastalar where " +
+            SqlCommand komut = new SqlCommand("select * from Hasta where " +
                                               "Hastatc=@p1", bgl.baglanti());
             komut.Parameters.AddWithValue("@p1", msktc.Text);
             //komut.Parameters.AddWithValue("@p2", txtsifre.Text); hastadan şifreyi sildik

@@ -29,6 +29,7 @@ namespace HastaneKayit
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBrans));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnguncelle = new System.Windows.Forms.Button();
             this.btnsil = new System.Windows.Forms.Button();
@@ -37,6 +38,8 @@ namespace HastaneKayit
             this.label2 = new System.Windows.Forms.Label();
             this.txtad = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnTemizle = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,9 +55,9 @@ namespace HastaneKayit
             // 
             // btnguncelle
             // 
-            this.btnguncelle.Location = new System.Drawing.Point(70, 137);
+            this.btnguncelle.Location = new System.Drawing.Point(127, 137);
             this.btnguncelle.Name = "btnguncelle";
-            this.btnguncelle.Size = new System.Drawing.Size(187, 23);
+            this.btnguncelle.Size = new System.Drawing.Size(130, 23);
             this.btnguncelle.TabIndex = 26;
             this.btnguncelle.Text = "Güncelle";
             this.btnguncelle.UseVisualStyleBackColor = true;
@@ -112,11 +115,34 @@ namespace HastaneKayit
             this.label1.TabIndex = 14;
             this.label1.Text = "Branş Ad:";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label3.Location = new System.Drawing.Point(67, 163);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(167, 13);
+            this.label3.TabIndex = 28;
+            this.label3.Text = "Güncellemek istediğin branşa tıkla";
+            // 
+            // btnTemizle
+            // 
+            this.btnTemizle.Location = new System.Drawing.Point(70, 137);
+            this.btnTemizle.Name = "btnTemizle";
+            this.btnTemizle.Size = new System.Drawing.Size(51, 23);
+            this.btnTemizle.TabIndex = 29;
+            this.btnTemizle.Text = "Temizle";
+            this.btnTemizle.UseVisualStyleBackColor = true;
+            this.btnTemizle.Click += new System.EventHandler(this.btnTemizle_Click);
+            // 
             // FrmBrans
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(634, 229);
+            this.Controls.Add(this.btnTemizle);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnguncelle);
             this.Controls.Add(this.btnsil);
@@ -125,6 +151,7 @@ namespace HastaneKayit
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtad);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmBrans";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Branş Düzenleme";
@@ -145,5 +172,7 @@ namespace HastaneKayit
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtad;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnTemizle;
     }
 }

@@ -29,6 +29,7 @@ namespace HastaneKayit
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDoktorGiris));
             this.label3 = new System.Windows.Forms.Label();
             this.btngiris = new System.Windows.Forms.Button();
             this.msktc = new System.Windows.Forms.MaskedTextBox();
@@ -41,18 +42,18 @@ namespace HastaneKayit
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label3.Location = new System.Drawing.Point(35, 22);
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.Location = new System.Drawing.Point(13, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(119, 16);
+            this.label3.Size = new System.Drawing.Size(198, 27);
             this.label3.TabIndex = 13;
             this.label3.Text = "Doktor Giriş Paneli";
             // 
             // btngiris
             // 
-            this.btngiris.Location = new System.Drawing.Point(56, 106);
+            this.btngiris.Location = new System.Drawing.Point(68, 101);
             this.btngiris.Name = "btngiris";
-            this.btngiris.Size = new System.Drawing.Size(98, 28);
+            this.btngiris.Size = new System.Drawing.Size(100, 28);
             this.btngiris.TabIndex = 3;
             this.btngiris.Text = "Giriş Yap";
             this.btngiris.UseVisualStyleBackColor = true;
@@ -60,28 +61,28 @@ namespace HastaneKayit
             // 
             // msktc
             // 
-            this.msktc.Location = new System.Drawing.Point(56, 54);
+            this.msktc.Location = new System.Drawing.Point(68, 49);
             this.msktc.Mask = "00000000000";
             this.msktc.Name = "msktc";
             this.msktc.Size = new System.Drawing.Size(100, 20);
             this.msktc.TabIndex = 1;
-            this.msktc.Text = "33333333333";
+            this.msktc.Text = "12345678901";
             this.msktc.ValidatingType = typeof(int);
             // 
             // txtsifre
             // 
-            this.txtsifre.Location = new System.Drawing.Point(56, 80);
+            this.txtsifre.Location = new System.Drawing.Point(68, 75);
             this.txtsifre.MaxLength = 10;
             this.txtsifre.Name = "txtsifre";
             this.txtsifre.Size = new System.Drawing.Size(100, 20);
             this.txtsifre.TabIndex = 2;
-            this.txtsifre.Text = "3333";
+            this.txtsifre.Text = "1";
             this.txtsifre.UseSystemPasswordChar = true;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 83);
+            this.label2.Location = new System.Drawing.Point(33, 78);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 8;
@@ -90,7 +91,7 @@ namespace HastaneKayit
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 57);
+            this.label1.Location = new System.Drawing.Point(38, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(24, 13);
             this.label1.TabIndex = 7;
@@ -98,12 +99,13 @@ namespace HastaneKayit
             // 
             // btngeri
             // 
-            this.btngeri.Location = new System.Drawing.Point(1, 142);
+            this.btngeri.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btngeri.Location = new System.Drawing.Point(1, 134);
             this.btngeri.Name = "btngeri";
-            this.btngeri.Size = new System.Drawing.Size(49, 36);
+            this.btngeri.Size = new System.Drawing.Size(45, 45);
             this.btngeri.TabIndex = 14;
             this.btngeri.Text = "Geri";
-            this.btngeri.UseVisualStyleBackColor = true;
+            this.btngeri.UseVisualStyleBackColor = false;
             this.btngeri.Click += new System.EventHandler(this.btngeri_Click);
             // 
             // FrmDoktorGiris
@@ -111,7 +113,10 @@ namespace HastaneKayit
             this.AcceptButton = this.btngiris;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(212, 180);
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ClientSize = new System.Drawing.Size(223, 180);
             this.Controls.Add(this.btngeri);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btngiris);
@@ -119,9 +124,11 @@ namespace HastaneKayit
             this.Controls.Add(this.txtsifre);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmDoktorGiris";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Doktor Giriş";
+            this.Load += new System.EventHandler(this.FrmDoktorGiris_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

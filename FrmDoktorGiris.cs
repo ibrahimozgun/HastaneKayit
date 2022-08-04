@@ -18,20 +18,22 @@ namespace HastaneKayit
             InitializeComponent();
         }
         sqlbaglantısı bgl = new sqlbaglantısı();
+        HashCode hc = new HashCode();
         private void btngiris_Click(object sender, EventArgs e)
         {
-            SqlCommand komut = new SqlCommand("Select *From Tbl_Doktorlar where " +
-                                              "Doktortc=@p1 and Doktorsifre=@p2", bgl.baglanti());
+            SqlCommand komut = new SqlCommand("Select *From Personel where " +
+                                              "Personeltc=@p1 and Personelsifre=@p2 and Personelunvan='doktor'", bgl.baglanti());
             komut.Parameters.AddWithValue("@p1", msktc.Text);
-            komut.Parameters.AddWithValue("@p2", txtsifre.Text);
+            komut.Parameters.AddWithValue("@p2", hc.PassHash(txtsifre.Text));
             SqlDataReader dr = komut.ExecuteReader();
             if (dr.Read())
             {
                 FrmDoktorDetay frd = new FrmDoktorDetay();
                 frd.TC = msktc.Text;
                 frd.Show();
-                this.Close();
-                frd.tarihler(); //doktor detayda comboBox'a randevuların tarihlerini yüklüyor
+                this.Hide();
+                frd.tarihlerA(); //doktor detayda comboBox'a randevuların tarihlerini yüklüyor
+                frd.tarihlerG();
             }
             else
             {
@@ -47,6 +49,11 @@ namespace HastaneKayit
             FrmGirisler frmm = new FrmGirisler();
             frmm.Show();
             this.Close();
+        }
+
+        private void FrmDoktorGiris_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

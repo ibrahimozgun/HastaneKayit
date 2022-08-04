@@ -17,52 +17,119 @@ namespace HastaneKayit
         {
             InitializeComponent();
         }
-        public void tarihler() //giriş ekranındaki girişe tıklayınca yükleniyor  //loadın içine koyunca her muayene sonu kaydete basınca tarih sayısı artıyor
+        public void tarihlerA() //giriş ekranındaki girişe tıklayınca yükleniyor  //loadın içine koyunca her muayene sonu kaydete basınca tarih sayısı artıyor
         {
             //tarihleri comcoBox'a çekme
-            SqlCommand komut1 = new SqlCommand("select Randevutarih from Tbl_Randevular where Randevudoktor='" + lbladsoyad.Text + "'", bgl.baglanti());
-            SqlDataReader dr2 = komut1.ExecuteReader(); //veri okuyucuyu çalıştırıyor
-            while (dr2.Read())
+            SqlCommand komut = new SqlCommand("select DISTINCT Randevutarih from Randevu where Randevudoktorid='" + lbldrid.Text + "' and " +
+                                                "Randevu.Randevutarih >= getdate()-1 ORDER BY Randevutarih", bgl.baglanti());
+            SqlDataReader dr = komut.ExecuteReader(); //veri okuyucuyu çalıştırıyor
+            while (dr.Read())
             {
-                cmbtarihler.Items.Add(dr2[0]); //dr[0] id leri tutuyor ama bransad olunca adlar 0
+                cmbtarihlerA.Items.Add(dr["Randevutarih"]); //dr[0] id leri tutuyor ama bransad olunca adlar 0
             }
             bgl.baglanti().Close();
+        }
+        public void tarihlerG()
+        {
+            SqlCommand komut = new SqlCommand("select DISTINCT Randevutarih from Randevu where Randevudoktorid='" + lbldrid.Text + "' and " +
+                                                "Randevu.Randevutarih < getdate()-1 ORDER BY Randevutarih DESC", bgl.baglanti());
+            SqlDataReader dr = komut.ExecuteReader(); //veri okuyucuyu çalıştırıyor
+            while (dr.Read())
+            {
+                cmbtarihlerG.Items.Add(dr[0]); //dr[0] id leri tutuyor ama bransad olunca adlar 0
+            }
+            bgl.baglanti().Close();
+        }
+        public void Aktif_Randevu()
+        {
+            //AKTIF RANDEVULAR
+            DataTable dtx = new DataTable();
+            SqlDataAdapter dax = new SqlDataAdapter("Select Randevuid as 'ID', Randevutarih as 'Tarih', Randevusaat as 'Saat', Doktorad +' '+ Doktorsoyad as 'Doktor', " +
+                "Hastaid as 'H.ID', Hastaisim as 'Hasta', Hastatc as 'Hasta TC', Hastatelefon, Hastasikayet as 'Şikayet', Randevuozet as 'Muayene Sonrası' From Randevu " +
+                "inner join Doktor on Randevu.Randevudoktorid=Doktor.Doktorid " +
+                "inner join Hasta on Randevu.Randevuhastaid=Hasta.Hastaid where Randevudoktorid='" + lbldrid.Text + "' and Randevu.Randevutarih >= getdate()-1 " +
+                "ORDER BY Randevutarih, Randevusaat", bgl.baglanti());
+            dax.Fill(dtx);
+            dataGridAktif.DataSource = dtx;
+            bgl.baglanti().Close();
+            dataGridAktif.Columns[1].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dataGridAktif.Columns[4].DisplayIndex = 9;
+        }
+        public void Gecmis_Randevu()
+        {
+            //GECMIS RANDEVULAR
+            DataTable dty = new DataTable();
+            SqlDataAdapter day = new SqlDataAdapter("Select Randevuid as 'ID', Randevutarih as 'Tarih', Randevusaat as 'Saat', Doktorad +' '+ Doktorsoyad as 'Doktor', " +
+                "Hastaid as 'H.ID', Hastaisim as 'Hasta', Hastatc as 'Hasta TC', Hastatelefon, Hastasikayet as 'Şikayet', Randevuozet as 'Muayene Sonrası' From Randevu " +
+                "inner join Doktor on Randevu.Randevudoktorid=Doktor.Doktorid " +
+                "inner join Hasta on Randevu.Randevuhastaid=Hasta.Hastaid where Randevudoktorid='" + lbldrid.Text + "' and Randevu.Randevutarih < getdate()-1 " +
+                "ORDER BY Randevutarih DESC, Randevusaat", bgl.baglanti());
+            day.Fill(dty);
+            dataGridGecmis.DataSource = dty;
+            bgl.baglanti().Close();
+            dataGridGecmis.Columns[1].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dataGridAktif.Columns[4].DisplayIndex = 9;
         }
         public string TC;
         sqlbaglantısı bgl = new sqlbaglantısı();
         private void FrmDoktorDetay_Load(object sender, EventArgs e)
         {
+            lblizinbas.Text = null;
+            lblizinbit.Text = null;
             btnrandevukaydet.Enabled = false;
             lbltc.Text = TC;
-            SqlCommand komut = new SqlCommand("Select Doktorad , Doktorsoyad From Tbl_Doktorlar " +
-                                              "where Doktortc=" + lbltc.Text, bgl.baglanti());
+            lbltarih.Text = DateTime.Now.ToShortDateString(); // sadece tarih
+            //doktorun tc sine bakarak personel idsini bulma
+            SqlCommand komut = new SqlCommand("Select Personelid From Personel " +
+                                              "where Personeltc=" + lbltc.Text, bgl.baglanti());
             SqlDataReader dr = komut.ExecuteReader();
             while (dr.Read())
             {
-                lbladsoyad.Text = dr[0] + " " + dr[1];
+                lblperid.Text = dr[0].ToString();
+            }
+            bgl.baglanti().Close();
+            //doktorun personelid sine bakarak doktor id sini bulma
+            SqlCommand komut2 = new SqlCommand("Select Doktorid, Doktorad+' '+Doktorsoyad, Doktorizinbas, Doktorizinson From Doktor where Doktorpersonelid=" + lblperid.Text, bgl.baglanti());
+            SqlDataReader dr2 = komut2.ExecuteReader();
+            while (dr2.Read())
+            {
+                lbldrid.Text = dr2[0].ToString();
+                lbladsoyad.Text = dr2[1].ToString();
+                lblizinbas.Text = dr2[2].ToString();
+                lblizinbit.Text = dr2[3].ToString();
             }
             bgl.baglanti().Close();
 
-            //ekrandanki ismin randevulaını listeler
-            DataTable dt1 = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter("Select *From Tbl_Randevular where Randevudoktor='" + lbladsoyad.Text + "'", bgl.baglanti());
-            da.Fill(dt1);
-            dataGridView1.DataSource = dt1;
-            bgl.baglanti().Close();
-            dataGridView1.Columns[7].DisplayIndex = 3; //şikayeti tarihten sonraya taşıdık
-            dataGridView1.Columns[0].HeaderText = "ID";
-            dataGridView1.Columns[1].HeaderText = "Tarih";
-            dataGridView1.Columns[2].HeaderText = "Saat";
-            dataGridView1.Columns[3].HeaderText = "Branş";
-            dataGridView1.Columns[6].HeaderText = "Hasta TC'si";
-            dataGridView1.Columns[7].HeaderText = "Hastanın şikayeti";
-            dataGridView1.Columns[8].HeaderText = "Muayene sonrası";
-            dataGridView1.Columns[4].Visible = false; //dataGridView1.Columns[4].HeaderText = "Doktor";
-            dataGridView1.Columns[5].Visible = false; //dataGridView1.Columns[5].HeaderText = "Durum";
+            if (lblizinbas.Text != "")
+            {
+                DateTime timeizin = Convert.ToDateTime(lblizinbas.Text);
+                DateTime timeson = Convert.ToDateTime(lblizinbit.Text);
+                DateTime timenow = Convert.ToDateTime(lbltarih.Text);
+                lblizinbas.Text = timeizin.ToShortDateString();
+                lblizinbit.Text = timeson.ToShortDateString();
+
+                if (timeizin <= timenow && timenow <= timeson)
+                {
+                    btnizinal.Enabled = false;
+                    lblizindurum.Text = "İzinli";
+                }
+                else
+                {
+                    btnizinal.Enabled = true;
+                    lblizindurum.Text = "İzinli Değil";
+                }
+            }
+            else
+            {
+                lblizindurum.Text = "İzinli Değil";
+            }
+            Aktif_Randevu();
+            Gecmis_Randevu();
         }
         private void btnbilgiduzenle_Click(object sender, EventArgs e)
         {
             FrmDoktorBilgiDuzenle frd = new FrmDoktorBilgiDuzenle();
+            frd.doktorid = lbldrid.Text;
             frd.doktortc = lbltc.Text;
             frd.Show();
         }
@@ -81,63 +148,197 @@ namespace HastaneKayit
             this.Close();
             frm.Show();
         }
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            btnrandevukaydet.Enabled = true;
-            int secilen = dataGridView1.SelectedCells[0].RowIndex;
-            richTextBox1.Text = dataGridView1.Rows[secilen].Cells[7].Value.ToString();
-            txtid.Text = dataGridView1.Rows[secilen].Cells[0].Value.ToString();
-            richtxt.Text = dataGridView1.Rows[secilen].Cells[8].Value.ToString();
-        }
-
         private void btnrandevukaydet_Click(object sender, EventArgs e)
         {
-            SqlCommand komut = new SqlCommand("update Tbl_Randevular set Randevusonuozet=@p1 where Randevuid=" + txtid.Text, bgl.baglanti());
-            komut.Parameters.AddWithValue("@p1", richtxt.Text);
+            SqlCommand komut = new SqlCommand("update Randevu set Randevuozet=@p1 where Randevuid=" + txtid.Text, bgl.baglanti());
+            komut.Parameters.AddWithValue("@p1", richtxtMuayene.Text);
             komut.ExecuteNonQuery();
             bgl.baglanti().Close();
             MessageBox.Show("muayene sonu bilgiler eklendi");
-            richtxt.Clear();
+            richtxtMuayene.Clear();
             FrmDoktorDetay_Load(sender, e);
         }
-
-        private void cmbtarihler_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnizin_Click(object sender, EventArgs e)
         {
-            // doktorun birini seçinde doktorun randevuları
-            DataTable dt = new DataTable();         //randevunun durum 0 ise gösteriyor
-            SqlDataAdapter da = new SqlDataAdapter("Select *From Tbl_Randevular where Randevutarih='"+cmbtarihler.Text+"' and " +
-                                                   "Randevudoktor='" + lbladsoyad.Text + "'", bgl.baglanti());
-            //kelime baazlı aramada sql de tek tırnak
-            da.Fill(dt);
-            dataGridView1.DataSource = dt;
-            dataGridView1.Columns[7].DisplayIndex = 3; //şikayeti tarihten sonraya aldık
-            dataGridView1.Columns[1].HeaderText = "Tarih"; //kolonları isimlendirme
-            dataGridView1.Columns[2].HeaderText = "Saat";
-            dataGridView1.Columns[3].HeaderText = "Branş";
-            dataGridView1.Columns[4].HeaderText = "Doktor";
-        }
+            TimeSpan sonuc = dateTimePicker2.Value.Date - dateTimePicker1.Value.Date;
+            int izinTop;
+            int izin;
 
-        private void btnfiltretemizle_Click(object sender, EventArgs e)
-        {
-            //dataGridView1.Columns.Clear();
-            //ekrandanki ismin randevulaını listeler
-            DataTable dt1 = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter("Select *From Tbl_Randevular where Randevudoktor='" + lbladsoyad.Text + "'", bgl.baglanti());
-            da.Fill(dt1);
-            dataGridView1.DataSource = dt1;
+            SqlCommand komutt = new SqlCommand("Select Doktorizinbas, Doktorizinson From Doktor where Doktorid=" + lbldrid.Text, bgl.baglanti());
+            SqlDataReader drr = komutt.ExecuteReader();
+            drr.Read();
+            string izin1 = drr[0].ToString();
+            string izin2 = drr[1].ToString();
             bgl.baglanti().Close();
-            dataGridView1.Columns[7].DisplayIndex = 3; //şikayeti tarihten sonraya aldık
-            dataGridView1.Columns[0].HeaderText = "ID";
-            dataGridView1.Columns[1].HeaderText = "Tarih";
-            dataGridView1.Columns[2].HeaderText = "Saat";
-            dataGridView1.Columns[3].HeaderText = "Branş";
-            dataGridView1.Columns[4].HeaderText = "Doktor";
-            dataGridView1.Columns[5].HeaderText = "Durum";
-            dataGridView1.Columns[6].HeaderText = "Hasta TC'si";
-            dataGridView1.Columns[7].HeaderText = "Hastanın şikayeti";
-            dataGridView1.Columns[8].HeaderText = "Muayene sonrası";
 
-            cmbtarihler.Text = "";
+            if (izin1 == "" || izin2 == "")
+            {
+                if (dateTimePicker1.Value > DateTime.Now)
+                {
+                    if (dateTimePicker1.Value < dateTimePicker2.Value)
+                    {
+                        if (sonuc.Days <= 15)
+                        {
+                            SqlCommand komut2 = new SqlCommand("select Doktorizintop From Doktor where Doktorid=" + lbldrid.Text, bgl.baglanti());
+                            izinTop = Convert.ToInt32(komut2.ExecuteScalar());
+                            izin = izinTop + sonuc.Days;
+
+                            if (izin < 22)
+                            {
+                                SqlCommand komut = new SqlCommand("Update Doktor set Doktorizinbas=@t1, Doktorizinson=@t2, Doktorizintop=@t3 where Doktorid=" + lbldrid.Text, bgl.baglanti());
+                                komut.Parameters.AddWithValue("@t1", dateTimePicker1.Value);
+                                komut.Parameters.AddWithValue("@t2", dateTimePicker2.Value);
+                                komut.Parameters.AddWithValue("@t3", izin);
+                                komut.ExecuteNonQuery();
+                                bgl.baglanti().Close();
+                                MessageBox.Show("İzin eklendi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                dateTimePicker1.ResetText();
+                                dateTimePicker2.ResetText();
+                                FrmDoktorDetay_Load(sender, e);
+                            }
+                            else
+                                MessageBox.Show("Toplam izin" + izin + "gün oluyor.\nToplam 21 günü geçemez");
+                        }
+                        else
+                            MessageBox.Show("15 Günden fazla izin alınamaz", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                        MessageBox.Show("bitiş tarihi yanlış", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                    MessageBox.Show("izin yarından itibaren başlamalı", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+                MessageBox.Show("İzin varken başka izin alınamaz", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        private void btnizinson_Click(object sender, EventArgs e)
+        {
+            //int izin;
+            //SqlCommand komut2 =new SqlCommand("select Doktorizinbas=@p1, Doktorizinson=@p2, Doktorizintop=@p3 where Doktorid="+)
+
+            SqlCommand komut = new SqlCommand("Update Doktor set Doktorizinbas=NULL, Doktorizinson=NULL where Doktorid='" + lbldrid.Text + "'", bgl.baglanti());
+            komut.ExecuteNonQuery();
+            bgl.baglanti().Close();
+            MessageBox.Show("İzin silindi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            FrmDoktorDetay_Load(sender, e);
+        }
+        private void dataGridGecmis_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            btnrandevukaydet.Enabled = true;
+            int secilen = dataGridGecmis.SelectedCells[0].RowIndex;
+            richTxtSikayet.Text = dataGridGecmis.Rows[secilen].Cells[8].Value.ToString();
+            txtid.Text = dataGridGecmis.Rows[secilen].Cells[0].Value.ToString();
+            richtxtMuayene.Text = dataGridGecmis.Rows[secilen].Cells[9].Value.ToString();
+            txtidsil.Text = null;
+        }
+        private void dataGridAktif_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            btnrandevukaydet.Enabled = true;
+            int secilen = dataGridAktif.SelectedCells[0].RowIndex;
+            richTxtSikayet.Text = dataGridAktif.Rows[secilen].Cells[8].Value.ToString();
+            txtid.Text = dataGridAktif.Rows[secilen].Cells[0].Value.ToString();
+            richtxtMuayene.Text = dataGridAktif.Rows[secilen].Cells[9].Value.ToString();
+            txtidsil.Text = null;
+        }
+        private void dataGridGecmis_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int secilen = dataGridGecmis.SelectedCells[0].RowIndex;
+            txtidsil.Text = dataGridGecmis.Rows[secilen].Cells[0].Value.ToString();
+        }
+        private void dataGridAktif_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int secilen = dataGridAktif.SelectedCells[0].RowIndex;
+            txtidsil.Text = dataGridAktif.Rows[secilen].Cells[0].Value.ToString();
+        }
+        private void btnSil_Click(object sender, EventArgs e)
+        {
+            if (txtidsil.Text != "")
+            {
+                if (MessageBox.Show(txtidsil.Text + " ID'li Randevuyu silmek istiyor musunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    SqlCommand sil = new SqlCommand("delete from Randevu where Randevuid=" + txtidsil.Text, bgl.baglanti());
+                    sil.ExecuteNonQuery();
+                    bgl.baglanti().Close();
+                    FrmDoktorDetay_Load(sender, e);
+                    txtidsil.Text = null;
+                }
+                else
+                {
+                    txtidsil.Text = null;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Silinecek Randevunun ID si bulunamadı", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void cmbtarihlerA_SelectedIndexChanged(object sender, EventArgs e) //o tarihteki randevular
+        {
+            if (cmbtarihlerA.Text == "")
+            {
+                // date null old. için patlıyordu
+            }
+            else
+            {
+                // comboBOx daki tarihler yyyy-mm-dd oldğ. için hata veriyordu splitle tarihi ayrırıp geri birleştirdik
+                string value = cmbtarihlerA.SelectedItem.ToString().Split(' ')[0];
+                string yil = value.Split('.')[2];
+                string ay = value.Split('.')[1];
+                string gun = value.Split('.')[0];
+                string date = yil + "-" + (ay.Length > 1 ? ay : "0" + ay) + "-" + (gun.Length > 1 ? gun : "0" + gun);
+
+                DataTable dt = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter("Select Randevuid as 'ID', Randevutarih as 'Tarih', Randevusaat as 'Saat', Doktorad +' '+ Doktorsoyad as 'Doktor', " +
+                    "Hastaid as 'H.ID', Hastaisim as 'Hasta', Hastatc as 'Hasta TC', Hastatelefon, Hastasikayet as 'Şikayet', Randevuozet as 'Muayene Sonrası' From Randevu " +
+                    "inner join Doktor on Randevu.Randevudoktorid=Doktor.Doktorid " +
+                    "inner join Hasta on Randevu.Randevuhastaid=Hasta.Hastaid where Randevudoktorid='" + lbldrid.Text + "' and " +
+                    "Randevutarih= cast('" + date + "'as date) and Randevu.Randevutarih >= getdate()-1 " +
+                    "ORDER BY Randevutarih, Randevusaat", bgl.baglanti());
+                da.Fill(dt);
+                dataGridAktif.DataSource = dt;
+                bgl.baglanti().Close();
+                dataGridAktif.Columns[1].DefaultCellStyle.Format = "dd/MM/yyyy";
+                dataGridAktif.Columns[4].DisplayIndex = 9;
+            }
+        }
+        private void cmbtarihlerG_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbtarihlerG.Text == "")
+            {
+            }
+            else
+            {
+                string value = cmbtarihlerG.SelectedItem.ToString().Split(' ')[0];
+                string yil = value.Split('.')[2];
+                string ay = value.Split('.')[1];
+                string gun = value.Split('.')[0];
+                string date = yil + "-" + (ay.Length > 1 ? ay : "0" + ay) + "-" + (gun.Length > 1 ? gun : "0" + gun);
+                DataTable dt = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter("Select Randevuid as 'ID', Randevutarih as 'Tarih', Randevusaat as 'Saat', Doktorad +' '+ Doktorsoyad as 'Doktor', " +
+                                "Hastaid as 'H.ID', Hastaisim as 'Hasta', Hastatc as 'Hasta TC', Hastatelefon, Hastasikayet as 'Şikayet', Randevuozet as 'Muayene Sonrası' From Randevu " +
+                                "inner join Doktor on Randevu.Randevudoktorid=Doktor.Doktorid " +
+                                "inner join Hasta on Randevu.Randevuhastaid=Hasta.Hastaid where Randevudoktorid='" + lbldrid.Text + "' and " +
+                                "Randevutarih='" + date + "' and Randevu.Randevutarih < getdate()-1 " +
+                                "ORDER BY Randevutarih DESC, Randevusaat", bgl.baglanti());
+                da.Fill(dt);
+                dataGridGecmis.DataSource = dt;
+                bgl.baglanti().Close();
+                dataGridGecmis.Columns[1].DefaultCellStyle.Format = "dd/MM/yyyy";
+                dataGridGecmis.Columns[4].DisplayIndex = 9;
+            }
+        }
+        private void btnfiltretemizleA_Click(object sender, EventArgs e)
+        {
+            //AKTIF RANDEVULAR
+            Aktif_Randevu();
+            cmbtarihlerA.Text = null;
+        }
+        private void btnfiltretemizleG_Click(object sender, EventArgs e)
+        {
+            //GECMIS RANDEVULAR
+            Gecmis_Randevu();
+            cmbtarihlerG.Text = null;
         }
     }
 }

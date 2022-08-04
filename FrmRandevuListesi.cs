@@ -18,220 +18,323 @@ namespace HastaneKayit
             InitializeComponent();
         }
         sqlbaglantısı bgl = new sqlbaglantısı();
-        public void temizle()
+        public void Temizle()
         {
             txtidguncelle.Clear();
-            msktarih.Clear();
-            msksaat.Clear();
-            cmbbrans.Text = "";
-            cmbdoktor.Text = "";
+            cmbsaat.Text = null;
+            cmbbrans.Text = null;
+            cmbdoktor.Text = null;
+            dateTimePicker1.ResetText();
             richtxtsikayet.Clear();
-            txttc.Clear();
+            txthastaid.Clear();
+            lblizinbas.Text = null;
+            lblizinbit.Text = null;
+            txtid.Text = null;
         }
-        public void tarih()
+        public void SaatYenile() //aynısı FrmHastaDetay da var
         {
-            lbltarih.Text = DateTime.Now.ToString("dd.MM.yyyy"); // sadece tarih
-            int gun = Convert.ToInt32(lbltarih.Text.Substring(0, 2));
-            int ay = Convert.ToInt32(lbltarih.Text.Substring(3, 2));
-            int yil = Convert.ToInt32(lbltarih.Text.Substring(6, 4));
-            lblgun.Text = Convert.ToString(gun);
-            lblay.Text = Convert.ToString(ay);
-            lblyil.Text = Convert.ToString(yil);
+            cmbsaat.Items.Clear();
+            for(int i=8; i < 10; i++)
+            {
+                cmbsaat.Items.Add("0"+i + ":00");
+                cmbsaat.Items.Add("0"+i + ":30");
+            }
+            for (int j = 10; j < 18; j++)
+            {
+                cmbsaat.Items.Add(j + ":00");
+                cmbsaat.Items.Add(j + ":30");
+            }
+        }
+        public void Randevu_Guncelle()
+        {
+            SqlCommand komut = new SqlCommand("Update Randevu set Randevutarih=@p1, Randevusaat=@p2, " +
+                                                          "Randevudoktorid=@p3, Randevuhastaid=@p4, Hastasikayet=@p5 where " +
+                                                          "Randevuid=" + txtidguncelle.Text, bgl.baglanti());
+            komut.Parameters.AddWithValue("@p1", dateTimePicker1.Value);
+            komut.Parameters.AddWithValue("@p2", cmbsaat.Text);
+            komut.Parameters.AddWithValue("@p3", lbldoktor.Text);
+            komut.Parameters.AddWithValue("@p4", txthastaid.Text);
+            komut.Parameters.AddWithValue("@p5", richtxtsikayet.Text);
+            komut.ExecuteNonQuery();
+            bgl.baglanti().Close();
+            MessageBox.Show("guncellendi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Temizle();
         }
         private void FrmRandevuListesi_Load(object sender, EventArgs e)
         {
-            tarih();
+            richtxtsikayet.MaxLength = 150;
+            cmbbrans.Items.Clear();
+            lbltarih.Text = DateTime.Now.ToString("dd.MM.yyyy"); // sadece tarih
             //branşları çekme combobox a
-            SqlCommand komut3 = new SqlCommand("select Bransad from Tbl_Branslar", bgl.baglanti());
+            SqlCommand komut3 = new SqlCommand("select Bransisim from Brans", bgl.baglanti());
             SqlDataReader dr3 = komut3.ExecuteReader(); //veri okuyucuyu çalıştırıyor
             while (dr3.Read())
             {
                 cmbbrans.Items.Add(dr3[0]); //dr[0] id leri tutuyor ama bransad olunca adlar 0
             }
             bgl.baglanti().Close();
-
-            //datagridview e randevu listeleme
+            //datagridview e Aktif randevulari listeleme
             DataTable dt = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter("Select *From Tbl_Randevular", bgl.baglanti());
+            SqlDataAdapter da = new SqlDataAdapter("Select Randevuid as 'ID', Randevutarih as 'Tarih', Randevusaat as 'Saat', Bransisim as 'Branş', " +
+                "Doktorad +' '+ Doktorsoyad as 'Doktor',Hastaid as 'H.ID', Hastaisim as 'Hasta', Hastatc as 'Hasta TC', Hastatelefon, Hastasikayet as 'Şikayet' From Randevu " +
+                "inner join Doktor on Randevu.Randevudoktorid=Doktor.Doktorid " +
+                "inner join Brans on Doktor.Doktorbransid=Brans.Bransid " +
+                "inner join Hasta on Randevu.Randevuhastaid=Hasta.Hastaid where Randevu.Randevutarih >= getdate()-1 ORDER BY Randevutarih", bgl.baglanti());
             da.Fill(dt);
-            dataGridView1.DataSource = dt;
-            dataGridView1.Columns[0].HeaderText = "ID";
-            dataGridView1.Columns[1].HeaderText = "Tarih";
-            dataGridView1.Columns[2].HeaderText = "Saat";
-            dataGridView1.Columns[3].HeaderText = "Branş";
-            dataGridView1.Columns[4].HeaderText = "Doktor";
-            dataGridView1.Columns[5].HeaderText = "Durum";
-            dataGridView1.Columns[6].HeaderText = "Hasta TC";
-            dataGridView1.Columns[0].Width = 39; //id genişliği
+            dataGridAktif.DataSource = dt;
+            bgl.baglanti().Close();
+            // Hastaları Listeleme
+            DataTable dt2 = new DataTable();
+            SqlDataAdapter da2 = new SqlDataAdapter("Select Hastaid as 'HastaID', Hastaisim as 'Hasta Isim', Hastatc as 'Hasta TCKN', Hastacinsiyet as 'Hasta Cinsiyet' From Hasta", bgl.baglanti());
+            da2.Fill(dt2);
+            dataGridHastalar.DataSource = dt2;
+            bgl.baglanti().Close();
+            dataGridHastalar.Columns[0].Width = 50;
+            // Gecmis randevulari listeleme
+            DataTable dtt = new DataTable();
+            SqlDataAdapter daa = new SqlDataAdapter("Select Randevuid as 'ID', Randevutarih as 'Tarih', Randevusaat as 'Saat', Bransisim as 'Branş', " +
+                "Doktorad +' '+ Doktorsoyad as 'Doktor',Hastaid as 'Hasta ID', Hastaisim as 'Hasta', Hastatc as 'Hasta TC', Hastatelefon, Hastasikayet as 'Şikayet' From Randevu " +
+                "inner join Doktor on Randevu.Randevudoktorid=Doktor.Doktorid " +
+                "inner join Brans on Doktor.Doktorbransid=Brans.Bransid " +
+                "inner join Hasta on Randevu.Randevuhastaid=Hasta.Hastaid where Randevu.Randevutarih < getdate()-1 ORDER BY Randevutarih DESC", bgl.baglanti());
+            daa.Fill(dtt);
+            dataGridGecmis.DataSource = dtt;
+            bgl.baglanti().Close();
+            dataGridGecmis.Columns[1].DefaultCellStyle.Format = "dd/MM/yyyy";
         }
-
-        //public int secilen;
-        // https://www.udemy.com/course/sifirdan-ileri-seviye-csharp-programlama/learn/lecture/8388878#overview
-        // tablodan bir randevuya çıft tıklayınca veriler sekreter detaya gidecek 
-        private void dataGridView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //yap
+            btnguncelle.Enabled = true;
+            int secilen = dataGridAktif.SelectedCells[0].RowIndex;
+            txtidguncelle.Text = dataGridAktif.Rows[secilen].Cells[0].Value.ToString();
+            dateTimePicker1.Value = Convert.ToDateTime(dataGridAktif.Rows[secilen].Cells[1].Value);
+            cmbsaat.Text = dataGridAktif.Rows[secilen].Cells[2].Value.ToString();
+            cmbbrans.Text = dataGridAktif.Rows[secilen].Cells[3].Value.ToString();
+            cmbdoktor.Text = dataGridAktif.Rows[secilen].Cells[4].Value.ToString();
+            txthastaid.Text = dataGridAktif.Rows[secilen].Cells[5].Value.ToString();
+            richtxtsikayet.Text = dataGridAktif.Rows[secilen].Cells[9].Value.ToString();
         }
-
+        private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            btnguncelle.Enabled = false;
+            int secilen = dataGridGecmis.SelectedCells[0].RowIndex;
+            txtidguncelle.Text = dataGridGecmis.Rows[secilen].Cells[0].Value.ToString();
+            dateTimePicker1.Value = Convert.ToDateTime(dataGridGecmis.Rows[secilen].Cells[1].Value);
+            cmbsaat.Text = dataGridGecmis.Rows[secilen].Cells[2].Value.ToString();
+            cmbbrans.Text = dataGridGecmis.Rows[secilen].Cells[3].Value.ToString();
+            cmbdoktor.Text = dataGridGecmis.Rows[secilen].Cells[4].Value.ToString();
+            txthastaid.Text = dataGridGecmis.Rows[secilen].Cells[5].Value.ToString();
+            richtxtsikayet.Text = dataGridGecmis.Rows[secilen].Cells[9].Value.ToString();
+        }
         private void btnsil_Click(object sender, EventArgs e)
         {
-            string kelime = txtid.Text;
-            int hata = 0;
-
-            if (kelime == "")
+            if (txtid.Text == "")
             {
-                hata = 2;
+                MessageBox.Show("Silmek istediğiniz randevuyu girin", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtid.Focus();
             }
-
             else
             {
-                foreach (DataGridViewRow row in dataGridView1.Rows)
+                SqlCommand komutx = new SqlCommand("SELECT Count(*) FROM Randevu where Randevuid='" + txtid.Text + "'", bgl.baglanti());
+                int sonuc = (int)komutx.ExecuteScalar(); //tc yoksa 0 varsa 1
+                if (sonuc > 0)
                 {
-                    if (kelime == Convert.ToString(row.Cells["Randevuid"].Value))
+                    //randevu silincek ama messageBox da eveti seçmeli
+                    if (MessageBox.Show("Randevuyu silmek istediğinize emin misiniz?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
-                        hata = 0;
+                        SqlCommand komutsil = new SqlCommand("delete From Randevu where Randevuid=@id", bgl.baglanti());
+                        komutsil.Parameters.AddWithValue("@id", txtid.Text);
+                        komutsil.ExecuteNonQuery();
+                        bgl.baglanti().Close();
+                        MessageBox.Show(txtid.Text + " ID'li randevu silindi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtid.Clear();
+                        FrmRandevuListesi_Load(sender, e);
+                    }
+                    else //messageBox da evet'e basmazsa silinmiyor
+                    {
+                        txtid.Clear();
+                    }
+                }
+                else //sonuc=0 ve randevu bulunmadı
+                {
+                    MessageBox.Show("Girmiş olduğunuz ID de randevu bulunamadı", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtid.Clear();
+                }
+                bgl.baglanti().Close();
+            }
+        }
+        private void btnguncelle_Click(object sender, EventArgs e)
+        {
+            DateTime dateTime = DateTime.Now;
+            DateTime dun = dateTime.AddDays(-1);
+
+            if (txtidguncelle.Text == "" || cmbbrans.Text == "" || cmbdoktor.Text == "" || cmbsaat.Text == "" || txthastaid.Text == "")
+            {
+                MessageBox.Show("Eksik alan var", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if (dateTimePicker1.Value < dun)
+            {
+                MessageBox.Show("İleri bir tarih seç", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                string hastaid = txthastaid.Text;
+                int hata2 = 0;
+
+                foreach (DataGridViewRow row in dataGridHastalar.Rows)
+                {
+                    if (hastaid == Convert.ToString(row.Cells[0].Value))
+                    {
+                        hata2 = 0;
                         break;
                     }
                     else
                     {
-                        hata = 1;
+                        hata2 = 1;
                     }
                 }
-            }
-
-            if (hata == 0)
-            {
-                //randevu silincek ama messageBox da eveti seçmeli
-                if (MessageBox.Show("Randevuyu silmek istediğinize emin misiniz?", "Some Title", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                if (hata2 == 0)
                 {
-                    SqlCommand komutsil = new SqlCommand("delete From Tbl_Randevular where Randevuid=@p1", bgl.baglanti());
-                    komutsil.Parameters.AddWithValue("@p1", txtid.Text);
-                    komutsil.ExecuteNonQuery();
-                    bgl.baglanti().Close();
-                    MessageBox.Show(txtid.Text + " ID'li randevu silindi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    txtid.Clear();
-                    FrmRandevuListesi_Load(sender, e);
-                }
-                else //messageBox da evet'e basmazsa silinmiyor
-                {
-                    txtid.Clear();
-                }                
-            }
-            else if (hata == 1)
-            {
-                MessageBox.Show("Silinecek randevu bulunamadi", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtid.Clear();
-                txtid.Focus();
-            }
-            else if (hata == 2)
-            {
-                MessageBox.Show("Silmek istediğin randevunun ID'sini gir", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtid.Focus();
-            }
-        }
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int secilen = dataGridView1.SelectedCells[0].RowIndex;
-            txtidguncelle.Text = dataGridView1.Rows[secilen].Cells[0].Value.ToString();
-            msktarih.Text = dataGridView1.Rows[secilen].Cells[1].Value.ToString();
-            msksaat.Text = dataGridView1.Rows[secilen].Cells[2].Value.ToString();
-            cmbbrans.Text = dataGridView1.Rows[secilen].Cells[3].Value.ToString();
-            cmbdoktor.Text = dataGridView1.Rows[secilen].Cells[4].Value.ToString();
-            txttc.Text = dataGridView1.Rows[secilen].Cells[6].Value.ToString();
-            richtxtsikayet.Text = dataGridView1.Rows[secilen].Cells[7].Value.ToString();
-        }
-
-        private void btnguncelle_Click(object sender, EventArgs e)
-        {
-            if(msksaat.MaskFull && msktarih.MaskFull) //tarihle saat karakter eksikse hata
-            {
-                ////maskedTextBox dan alınan saatin 24:59 uygunluğunu kontrol ediyor
-                int saat = Convert.ToInt32(msksaat.Text.Substring(0, 2));
-                int dakika = Convert.ToInt32(msksaat.Text.Substring(3, 2));
-                lblsaat.Text = Convert.ToString(saat);
-                lbldakika.Text = Convert.ToString(dakika);
-
-                //RANDEVU TARİHİ KONTOL
-                lbltarih.Text = DateTime.Now.ToString("dd.MM.yyyy"); // sadece tarih
-                int rgun = Convert.ToInt32(msktarih.Text.Substring(0, 2));
-                int ray = Convert.ToInt32(msktarih.Text.Substring(3, 2));
-                int ryil = Convert.ToInt32(msktarih.Text.Substring(6, 4));
-                lblrgun.Text = Convert.ToString(rgun);
-                lblray.Text = Convert.ToString(ray);
-                lblryil.Text = Convert.ToString(ryil);
-
-                if (saat < 24 && dakika < 60) //saat 24:59 a uymassa hata
-                {
-                    if (txtidguncelle.Text == "" || msksaat.Text == "" || msktarih.Text == "" ||
-                        cmbbrans.Text == "" || cmbdoktor.Text == "" || txttc.Text == "" || richtxtsikayet.Text == "")
+                    if (lblizinbas.Text != "")
                     {
-                        MessageBox.Show("Eksik alan var", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        msktarih.Focus();
-                    }
-                    else
-                    {
-                        if (ryil < Convert.ToInt32(lblyil.Text))
+                        if (Convert.ToDateTime(lblizinbas.Text) <= dateTimePicker1.Value && dateTimePicker1.Value < Convert.ToDateTime(lblizinbit.Text)) //izin  basşangıc tarihinde izinli oluyor ama bitiş tarihinde izin bitiyor
                         {
-                            MessageBox.Show("Geçmiş tarihten randevu alınamaz", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else if (ryil == Convert.ToInt32(lblyil.Text) && ray < Convert.ToInt32(lblay.Text))
-                        {
-                            MessageBox.Show("Geçmiş tarihten randevu alınamaz", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else if (ray == Convert.ToInt32(lblay.Text) && rgun < Convert.ToInt32(lblgun.Text))
-                        {
-                            MessageBox.Show("Geçmiş tarihten randevu alınamaz", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Doktor izinli\n" + lblizinbas.Text + " - " + lblizinbit.Text + " Tarihleri arası randevu almayın", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
+                            //if içine evet hayır sorma
                             if (MessageBox.Show("Randevuyu güncellemek istiyor musunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                             {
-                                SqlCommand komut = new SqlCommand("Update Tbl_Randevular set Randevutarih=@p1, Randevusaat=@p2, " +
-                                                                  "Randevubrans=@p3, Randevudoktor=@p4, Hastatc=@p5, Hastasikayet=@p6 where " +
-                                                                  "Randevuid=" + txtidguncelle.Text, bgl.baglanti());
-                                komut.Parameters.AddWithValue("@p1", msktarih.Text);
-                                komut.Parameters.AddWithValue("@p2", msksaat.Text);
-                                komut.Parameters.AddWithValue("@p3", cmbbrans.Text);
-                                komut.Parameters.AddWithValue("@p4", cmbdoktor.Text);
-                                komut.Parameters.AddWithValue("@p5", txttc.Text);
-                                komut.Parameters.AddWithValue("@p6", richtxtsikayet.Text);
-                                komut.ExecuteNonQuery();
-                                bgl.baglanti().Close();
-                                MessageBox.Show("guncellendi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                Randevu_Guncelle();
                                 FrmRandevuListesi_Load(sender, e);
-                                temizle();
+
                             }
-                            else
+                            else //messageBox da evet'e basmazsa if’e girmiyor
                             {
-                                msktarih.Focus();
-                            }                           
+                                txtid.Clear();
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        //if içine evet hayır sorma
+                        if (MessageBox.Show("Randevuyu güncellemek istiyor musunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        {
+                            Randevu_Guncelle();
+                            FrmRandevuListesi_Load(sender, e);
+                        }
+                        else //messageBox da evet'e basmazsa if’e girmiyor
+                        {
+                            txtid.Clear();
                         }
                     }
                 }
-                else
+                else if (hata2 == 1)
                 {
-                    MessageBox.Show("Geçerli bir saat girin");
+                    MessageBox.Show("Bu ID li hasta yok", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txthastaid.Clear();
+                    txthastaid.Focus();
                 }
-            }
-            else
-            {
-                MessageBox.Show("Tarih veya saat hatalı","info",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
         private void cmbbrans_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //DropDownStyle = DropDownList özelliklerden bunu yaparak klavyeden veri girişini engelledik
             cmbdoktor.Items.Clear();
-            //brasş seçinde doktorların gelmesi
-            SqlCommand komut = new SqlCommand("Select Doktorad, Doktorsoyad From Tbl_Doktorlar where Doktorbrans=@p1", bgl.baglanti());
-            komut.Parameters.AddWithValue("@p1", cmbbrans.Text);
-            SqlDataReader dr = komut.ExecuteReader();
-            cmbdoktor.Text = null;
-            while (dr.Read())
+            lbldoktor.Text = null;
+            //brasş seçinde labela id si yazma
+            SqlCommand komut3 = new SqlCommand("Select Bransid from Brans where Bransisim=@id", bgl.baglanti());
+            komut3.Parameters.AddWithValue("@id", cmbbrans.Text);
+            SqlDataReader dr3 = komut3.ExecuteReader();
+            lblbrans.Text = null;
+            while (dr3.Read())
             {
-                cmbdoktor.Items.Add(dr[0] + " " + dr[1]);
+                lblbrans.Text = dr3[0].ToString();
             }
             bgl.baglanti().Close();
+            ////////bir bransa tıklanınca doktorlar combobox a yüklenir
+            SqlCommand komut = new SqlCommand("Select Doktorad, Doktorsoyad, Doktorid From Doktor d, Brans b where b.Bransid='" + lblbrans.Text + "' and d.Doktorbransid=b.Bransid", bgl.baglanti());
+            SqlDataReader dr = komut.ExecuteReader();
+            while (dr.Read())
+            {
+                cmbdoktor.Items.Add(Convert.ToString(dr[0] + " " + dr[1]));
+            }
+            bgl.baglanti().Close();
+            cmbsaat.Enabled = true;
+        }
+        private void cmbdoktor_SelectedIndexChanged(object sender, EventArgs e) //comboBox da tıklanılan doktorun doktorid'sini labela atıyor
+        {
+            SqlCommand komut = new SqlCommand("Select Doktorid from Doktor where Doktorad+' '+Doktorsoyad=@dr", bgl.baglanti());
+            komut.Parameters.AddWithValue("@dr", cmbdoktor.Text);
+            SqlDataReader dr = komut.ExecuteReader();
+            lbldoktor.Text = null;
+            while (dr.Read())
+            {
+                lbldoktor.Text = dr[0].ToString();
+            }
+            bgl.baglanti().Close();
+            //seçilen doktorun izin baslangıc ve bitiş tarihini label a yazdırma
+            SqlCommand komutt = new SqlCommand("Select Doktorizinbas, Doktorizinson From Doktor where Doktorid=" + lbldoktor.Text, bgl.baglanti());
+            SqlDataReader drr = komutt.ExecuteReader();
+            while (drr.Read())
+            {
+                lblizinbas.Text = drr[0].ToString();
+                lblizinbit.Text = drr[1].ToString();
+            }
+            bgl.baglanti().Close();
+            //label'lara tarih yazılırsa bu tarihleri kısa tarihe çevir
+            if (lblizinbas.Text != "")
+            {
+                DateTime timeizin = Convert.ToDateTime(lblizinbas.Text);
+                DateTime timeson = Convert.ToDateTime(lblizinbit.Text);
+                lblizinbas.Text = timeizin.ToShortDateString();
+                lblizinbit.Text = timeson.ToShortDateString();
+            }
+        }
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int secilen = dataGridHastalar.SelectedCells[0].RowIndex;
+            txthastaid.Text = dataGridHastalar.Rows[secilen].Cells[0].Value.ToString();
+        }
+        private void btntemizle_Click(object sender, EventArgs e)
+        {
+            Temizle();
+            btnguncelle.Enabled = true;
+        }
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            cmbsaat.Text = null;
+        }
+        private void cmbsaat_MouseClick(object sender, MouseEventArgs e)
+        {
+            // burada saate tıklanrak doktorun seçili tarihteki randevularının saaatleri comboBox tan kaldırılıyor // sql e or ekleyerek hastanın randevuları da gitti
+            //doktor veya branş seçili değilken patladıgı için if ekledim
+            if (cmbbrans.Text == "" || cmbdoktor.Text == "")
+            {
+                MessageBox.Show("Henüz branş veya doktor seçmedin", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cmbsaat.Text = null;
+            }
+            else if (txthastaid.Text == "")
+            {
+                MessageBox.Show("Saati Hasta ID'yi girdikten sonra seçin", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cmbsaat.Text = null;
+            }
+            else
+            {
+                SaatYenile();
+                SqlCommand komutx = new SqlCommand("select Randevusaat from Randevu where Randevutarih=@tarih and (Randevudoktorid=@doktor or Randevuhastaid=@hasta)", bgl.baglanti());
+                komutx.Parameters.AddWithValue("@doktor", lbldoktor.Text);
+                komutx.Parameters.AddWithValue("@tarih", dateTimePicker1.Value.Date);
+                komutx.Parameters.AddWithValue("@hasta", txthastaid.Text);
+                SqlDataReader drx = komutx.ExecuteReader();
+                while (drx.Read())
+                {
+                    cmbsaat.Items.Remove(Convert.ToString(drx["Randevusaat"]));
+                }
+                bgl.baglanti().Close();
+            }
         }
     }
 }

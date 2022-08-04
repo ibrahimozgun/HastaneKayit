@@ -12,7 +12,7 @@ namespace HastaneKayit
         public SqlConnection baglanti()
         {
             SqlConnection baglan = new SqlConnection("Data Source=MONSTER\\SQLEXPRESS;Initial " +
-                                                     "Catalog=HastaneProje;Integrated Security=True");
+                                                     "Catalog=Hastane;Integrated Security=True");
             baglan.Open();
             return baglan;
         }

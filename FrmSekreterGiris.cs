@@ -18,14 +18,14 @@ namespace HastaneKayit
             InitializeComponent();
         }
         sqlbaglantısı bgl = new sqlbaglantısı();
+        HashCode hc = new HashCode();
         private void btngiris_Click(object sender, EventArgs e)
         {
-            SqlCommand komut = new SqlCommand("select * from Tbl_Sekreterler where " +
-                                              "Sekretertc=@p1 and Sekretersifre=@p2", bgl.baglanti());
+            SqlCommand komut = new SqlCommand("select *from Personel where " +
+                                              "Personeltc=@p1 and Personelsifre=@p2", bgl.baglanti());
             komut.Parameters.AddWithValue("@p1", msktc.Text);
-            komut.Parameters.AddWithValue("@p2", txtsifre.Text);
+            komut.Parameters.AddWithValue("@p2", hc.PassHash(txtsifre.Text));
             SqlDataReader dr = komut.ExecuteReader();
-
             if (dr.Read())
             {
                 FrmSekreterDetay frms = new FrmSekreterDetay();

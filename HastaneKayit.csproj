@@ -60,6 +60,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmAdminGiris.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAdminGiris.Designer.cs">
+      <DependentUpon>FrmAdminGiris.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmAdminDetay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAdminDetay.Designer.cs">
+      <DependentUpon>FrmAdminDetay.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmBilgiDuzenle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,11 +138,23 @@
     <Compile Include="FrmHastaKayit.Designer.cs">
       <DependentUpon>FrmHastaKayit.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmPerParolaSifirla.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPerParolaSifirla.Designer.cs">
+      <DependentUpon>FrmPerParolaSifirla.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmRandevuListesi.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmRandevuListesi.Designer.cs">
       <DependentUpon>FrmRandevuListesi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSekreterBilgiDuzenle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSekreterBilgiDuzenle.Designer.cs">
+      <DependentUpon>FrmSekreterBilgiDuzenle.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmSekreterDetay.cs">
       <SubType>Form</SubType>
@@ -144,15 +168,28 @@
     <Compile Include="FrmSekreterGiris.Designer.cs">
       <DependentUpon>FrmSekreterGiris.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sifre deneme.cs">
+    <Compile Include="FrmSekreterKayit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sifre deneme.Designer.cs">
-      <DependentUpon>sifre deneme.cs</DependentUpon>
+    <Compile Include="FrmSekreterKayit.Designer.cs">
+      <DependentUpon>FrmSekreterKayit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HashCode.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FrmSifre_Degistir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSifre_Degistir.Designer.cs">
+      <DependentUpon>FrmSifre_Degistir.cs</DependentUpon>
     </Compile>
     <Compile Include="sqlbaglantısı.cs" />
+    <EmbeddedResource Include="FrmAdminGiris.resx">
+      <DependentUpon>FrmAdminGiris.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAdminDetay.resx">
+      <DependentUpon>FrmAdminDetay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmBilgiDuzenle.resx">
       <DependentUpon>FrmBilgiDuzenle.cs</DependentUpon>
     </EmbeddedResource>
@@ -186,14 +223,23 @@
     <EmbeddedResource Include="FrmHastaKayit.resx">
       <DependentUpon>FrmHastaKayit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmPerParolaSifirla.resx">
+      <DependentUpon>FrmPerParolaSifirla.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmRandevuListesi.resx">
       <DependentUpon>FrmRandevuListesi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSekreterBilgiDuzenle.resx">
+      <DependentUpon>FrmSekreterBilgiDuzenle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSekreterDetay.resx">
       <DependentUpon>FrmSekreterDetay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSekreterGiris.resx">
       <DependentUpon>FrmSekreterGiris.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSekreterKayit.resx">
+      <DependentUpon>FrmSekreterKayit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -204,8 +250,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="sifre deneme.resx">
-      <DependentUpon>sifre deneme.cs</DependentUpon>
+    <EmbeddedResource Include="FrmSifre_Degistir.resx">
+      <DependentUpon>FrmSifre_Degistir.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

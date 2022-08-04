@@ -42,5 +42,12 @@ namespace HastaneKayit
         {
 
         }
+
+        private void btnAdmin_Click(object sender, EventArgs e)
+        {
+            FrmAdminGiris frm = new FrmAdminGiris();
+            frm.Show();
+            this.Hide();
+        }
     }
 }

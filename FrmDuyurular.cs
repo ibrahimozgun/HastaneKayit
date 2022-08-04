@@ -21,11 +21,12 @@ namespace HastaneKayit
         private void FrmDuyurular_Load(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter("Select *From Tbl_Duyurular", bgl.baglanti());
+            SqlDataAdapter da = new SqlDataAdapter("Select *From Duyuru", bgl.baglanti());
             da.Fill(dt);           
             dataGridView1.DataSource = dt;
             dataGridView1.Columns[0].Width = 45;
             dataGridView1.Columns[0].HeaderText = "ID";
+            dataGridView1.Columns[1].HeaderText = "DUYURU";
         }
     }
 }

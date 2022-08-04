@@ -21,157 +21,37 @@ namespace HastaneKayit
         public string tc; //giriş ekranından çekebilmek için
         private void FrmSekreterDetay_Load(object sender, EventArgs e)
         {
-            lbldurum.Text = "0";
+            richTextBox1.MaxLength = 250;
+            txtduyuruid.MaxLength = 4;
             lbltc.Text = tc; //giriş ekranından tc yi çekme
 
             //giriş ekranından isim soyisim çekme
-            SqlCommand komut1 = new SqlCommand("Select Sekreteradsoyad from Tbl_Sekreterler where Sekretertc=" + lbltc.Text, bgl.baglanti());
-            //komut.Parameters.AddWithValue("@tc", lbltc.Text);     =lbltc.text yaptık
+            SqlCommand komut1 = new SqlCommand("Select Sekreterisim from Sekreter inner join Personel " +
+                "on Sekreter.Sekreterpersonelid=Personel.Personelid where Personeltc=" + lbltc.Text, bgl.baglanti());
             SqlDataReader dr1 = komut1.ExecuteReader();
             while (dr1.Read())
             {
-                lbladsoyad.Text = dr1[0].ToString();
-                //doktor paneline sekreterin isim ve soyismini aktarıyoruz
+                lbladsoyad.Text = dr1[0].ToString(); //doktor paneline sekreterin adı gidiyor
             }
             bgl.baglanti().Close();
-
             //branşları görüntüleme DataGridView de
             DataTable dt1 = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter("select *from Tbl_Branslar", bgl.baglanti());
+            SqlDataAdapter da = new SqlDataAdapter("select *from Brans", bgl.baglanti());
             da.Fill(dt1);
             dataGridView1.DataSource = dt1;
             dataGridView1.Columns[0].HeaderText = "Branş ID";
             dataGridView1.Columns[1].HeaderText = "Branş";
             dataGridView1.Columns[0].Width = 55;
-
-
             //doktorları görüntüleme DataGridView de
             DataTable dt2 = new DataTable();
-            SqlDataAdapter da2 = new SqlDataAdapter("Select *From Tbl_Doktorlar", bgl.baglanti());
+            SqlDataAdapter da2 = new SqlDataAdapter("Select Doktorid, Doktorad as 'Ad', Doktorsoyad as 'Soyad', Bransisim as 'Branş', Personeltc, Doktortelefon as 'Telefon', Doktormail as 'Mail'," +
+                " Doktorkayittarih as 'Kayıt Tarihi', Doktorsekreter as 'Sorumlu Sekreter', Doktorizinbas as 'İzin başlangıç tarihi', Doktorizinson as 'İzin bitiş tarihi'" +
+                "  From Doktor inner join Brans on Doktor.Doktorbransid=Brans.Bransid inner join Personel on Doktor.Doktorpersonelid=Personel.Personelid", bgl.baglanti());
             da2.Fill(dt2);
             dataGridView2.DataSource = dt2;
-            //kolonları(sütunları) sıralama
-            dataGridView2.Columns[0].DisplayIndex = 9;
-            //kolonları isimlendirme
             dataGridView2.Columns[0].HeaderText = "ID";
-            dataGridView2.Columns[1].HeaderText = "İsim";
-            dataGridView2.Columns[2].HeaderText = "Soyisim";
-            dataGridView2.Columns[3].HeaderText = "Branş";
-            dataGridView2.Columns[4].HeaderText = "TC";
-            dataGridView2.Columns[5].HeaderText = "Şifre";
-            dataGridView2.Columns[6].HeaderText = "Telefon";
-            dataGridView2.Columns[7].HeaderText = "E-Mail";
-            dataGridView2.Columns[8].HeaderText = "Kayıt Tarihi";
-            dataGridView2.Columns[9].HeaderText = "Kaydeden Sekreter";
             dataGridView2.Columns[0].Width = 35; //ıd nın uzunluğu
-
-
-            //branşları çekme combobox a
-            SqlCommand komut3 = new SqlCommand("select Bransad from Tbl_Branslar", bgl.baglanti());
-            SqlDataReader dr3 = komut3.ExecuteReader(); //veri okuyucuyu çalıştırıyor
-            while (dr3.Read())
-            {
-                cmbbrans.Items.Add(dr3[0]); //dr[0] id leri tutuyor ama bransad olunca adlar 0
-            }
-            bgl.baglanti().Close();
         }
-
-        private void cmbbrans_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cmbdoktor.Items.Clear();
-            //brasş seçinde doktorların gelmesi
-            SqlCommand komut = new SqlCommand("Select Doktorad, Doktorsoyad From Tbl_Doktorlar where Doktorbrans=@p1", bgl.baglanti());
-            komut.Parameters.AddWithValue("@p1", cmbbrans.Text);
-            SqlDataReader dr = komut.ExecuteReader();
-            cmbdoktor.Text = null;
-            while (dr.Read())
-            {
-                cmbdoktor.Items.Add(dr[0] + " " + dr[1]);
-            }
-            bgl.baglanti().Close();
-        }
-
-        private void btnkaydet_Click(object sender, EventArgs e)
-        {
-            if (checkBoxDurum.Checked == true) //doktor dolu olacak ise hasta tc istiyor
-            {
-                if (msktarih.Text == "  .  ." || msksaat.Text == "  :" || cmbbrans.Text == "" || cmbdoktor.Text == "" || msktc.Text == "")
-                {
-                    MessageBox.Show("Eksik var", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    msktarih.Focus();
-                }
-                else
-                {
-                    SqlCommand komutkaydet = new SqlCommand("insert into Tbl_Randevular (Randevutarih, Randevusaat, Randevubrans, " +
-                                                            "Randevudoktor, Randevudurum, Hastatc) " +
-                                                            "values (@r1, @r2, @r3, @r4,@r5, @r6)", bgl.baglanti());
-                    komutkaydet.Parameters.AddWithValue("@r1", msktarih.Text);
-                    komutkaydet.Parameters.AddWithValue("@r2", msksaat.Text);
-                    komutkaydet.Parameters.AddWithValue("@r3", cmbbrans.Text);
-                    komutkaydet.Parameters.AddWithValue("@r4", cmbdoktor.Text);
-                    komutkaydet.Parameters.AddWithValue("@r5", lbldurum.Text);
-                    komutkaydet.Parameters.AddWithValue("@r6", msktc.Text);
-
-                    komutkaydet.ExecuteNonQuery(); //insert komutu old. değişiklikleri kaydetmek için
-                    bgl.baglanti().Close();
-                    MessageBox.Show("Randevu Tmm", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    msktarih.Text = "";
-                    msksaat.Text = "";
-                    cmbbrans.Text = "";
-                    cmbdoktor.Text = "";
-                    msktc.Text = "";
-                    msktarih.Focus();
-                }
-            }
-            else //doktor durumu 0 ise doktor boş olcak ve hasta tc girmeye gerek yok
-            {
-                if (msktarih.Text == "  .  ." || msksaat.Text == "  :" || cmbbrans.Text == "" || cmbdoktor.Text == "")
-                {
-                    MessageBox.Show("Eksik var", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    msktarih.Focus();
-                }
-                else if (msktc.Text != "")
-                {
-                    MessageBox.Show("Boş randevu için hasta tc girmeyin", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    msktc.Focus();
-                }
-                else
-                {
-                    SqlCommand komutkaydet = new SqlCommand("insert into Tbl_Randevular (Randevutarih, Randevusaat, Randevubrans, " +
-                                                            "Randevudoktor, Randevudurum) " +
-                                                            "values (@r1, @r2, @r3, @r4,@r5)", bgl.baglanti());
-                    komutkaydet.Parameters.AddWithValue("@r1", msktarih.Text);
-                    komutkaydet.Parameters.AddWithValue("@r2", msksaat.Text);
-                    komutkaydet.Parameters.AddWithValue("@r3", cmbbrans.Text);
-                    komutkaydet.Parameters.AddWithValue("@r4", cmbdoktor.Text);
-                    komutkaydet.Parameters.AddWithValue("@r5", lbldurum.Text);
-
-                    komutkaydet.ExecuteNonQuery(); //insert komutu old. değişiklikleri kaydetmek için
-                    bgl.baglanti().Close();
-                    MessageBox.Show("Boş Randevu Oluşturuldu", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    msktarih.Text = "";
-                    msksaat.Text = "";
-                    cmbbrans.Text = "";
-                    cmbdoktor.Text = "";
-                    msktc.Text = "";
-                    msktarih.Focus();
-                }
-            }
-
-        }
-
-        private void checkBoxDurum_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxDurum.Checked)
-            {
-                lbldurum.Text = "1";
-            }
-            else
-            {
-                lbldurum.Text = "0";
-            }
-        }
-
         private void btndoktor_Click(object sender, EventArgs e)
         {
             FrmDoktorPaneli frd = new FrmDoktorPaneli();
@@ -193,20 +73,20 @@ namespace HastaneKayit
 
         private void btnduyuruolustur_Click(object sender, EventArgs e)
         {
-            if (richTextBox1.Text=="")
+            if (richTextBox1.Text == "")
             {
                 MessageBox.Show("Boş duyuru oluşturulamaz", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 richTextBox1.Focus();
             }
             else
             {
-                SqlCommand komut = new SqlCommand("insert into Tbl_Duyurular (Duyuru) values (@p1)", bgl.baglanti());
+                SqlCommand komut = new SqlCommand("insert into Duyuru (Duyuruicerik) values (@p1)", bgl.baglanti());
                 komut.Parameters.AddWithValue("@p1", richTextBox1.Text);
                 komut.ExecuteNonQuery();
                 bgl.baglanti().Close();
                 MessageBox.Show("Duyuru oluştu", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 richTextBox1.Text = null;
-            } 
+            }
         }
         private void btnduyuru_Click(object sender, EventArgs e)
         {
@@ -220,23 +100,47 @@ namespace HastaneKayit
             this.Close();
             frm.Show();
         }
-
         private void btnduyurusil_Click(object sender, EventArgs e)
         {
             if (txtduyuruid.Text == "" || txtduyuruid.Text == null)
             {
                 MessageBox.Show("Silmek istediğin duyurunun ID'sini gir", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                msktc.Focus();
             }
             else
             {
-                SqlCommand komutsil = new SqlCommand("delete From Tbl_Duyurular where Duyuruid=@p1", bgl.baglanti());
-                komutsil.Parameters.AddWithValue("@p1", txtduyuruid.Text);
-                komutsil.ExecuteNonQuery();
-                MessageBox.Show(txtduyuruid.Text + " ID numaralı duyuru silindi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtduyuruid.Clear();
+                SqlCommand komutx = new SqlCommand("SELECT Count(*) FROM Duyuru where Duyuruid='" + txtduyuruid.Text + "'", bgl.baglanti());
+                int sonuc = (int)komutx.ExecuteScalar(); //tc yoksa 0 varsa 1
+                if (sonuc > 0) //sonuc=1 oldu kayıt var
+                {
+                    SqlCommand komutsil = new SqlCommand("delete From Duyuru where Duyuruid=@p1", bgl.baglanti());
+                    komutsil.Parameters.AddWithValue("@p1", txtduyuruid.Text);
+                    komutsil.ExecuteNonQuery();
+                    MessageBox.Show(txtduyuruid.Text + " ID numaralı duyuru silindi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtduyuruid.Clear();
+                    bgl.baglanti().Close();
+                }
+                else //sonuc=0 ve tc vt nında bulunmadı
+                {
+                    MessageBox.Show("Silinmek istenen randevu bulunamadı", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtduyuruid.Clear();
+                }
                 bgl.baglanti().Close();
             }
+        }
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            int u = richTextBox1.TextLength;
+            lblduyuru.Text = "Yazılan Karakter Sayısı: " + richTextBox1.TextLength.ToString();
+            if (u == 250)
+            {
+                MessageBox.Show("Maksimum sınıra ulaştınız!");
+            }
+        }
+        private void linkLabelSifreDeg_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            FrmSekreterBilgiDuzenle frm = new FrmSekreterBilgiDuzenle();
+            frm.TC = lbltc.Text;
+            frm.Show();
         }
     }
 }

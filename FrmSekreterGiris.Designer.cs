@@ -29,6 +29,7 @@ namespace HastaneKayit
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSekreterGiris));
             this.label3 = new System.Windows.Forms.Label();
             this.btngiris = new System.Windows.Forms.Button();
             this.msktc = new System.Windows.Forms.MaskedTextBox();
@@ -41,15 +42,17 @@ namespace HastaneKayit
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(49, 9);
+            this.label3.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.Location = new System.Drawing.Point(12, 10);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(102, 13);
+            this.label3.Size = new System.Drawing.Size(238, 31);
             this.label3.TabIndex = 13;
             this.label3.Text = "Sekreter Giriş Paneli";
             // 
             // btngiris
             // 
-            this.btngiris.Location = new System.Drawing.Point(64, 87);
+            this.btngiris.Location = new System.Drawing.Point(88, 106);
             this.btngiris.Name = "btngiris";
             this.btngiris.Size = new System.Drawing.Size(100, 28);
             this.btngiris.TabIndex = 3;
@@ -59,7 +62,7 @@ namespace HastaneKayit
             // 
             // msktc
             // 
-            this.msktc.Location = new System.Drawing.Point(64, 35);
+            this.msktc.Location = new System.Drawing.Point(88, 54);
             this.msktc.Mask = "00000000000";
             this.msktc.Name = "msktc";
             this.msktc.Size = new System.Drawing.Size(100, 20);
@@ -69,36 +72,36 @@ namespace HastaneKayit
             // 
             // txtsifre
             // 
-            this.txtsifre.Location = new System.Drawing.Point(64, 61);
+            this.txtsifre.Location = new System.Drawing.Point(88, 80);
             this.txtsifre.Name = "txtsifre";
             this.txtsifre.Size = new System.Drawing.Size(100, 20);
             this.txtsifre.TabIndex = 2;
-            this.txtsifre.Text = "0";
+            this.txtsifre.Text = "1aA.";
             this.txtsifre.UseSystemPasswordChar = true;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(29, 64);
+            this.label2.Location = new System.Drawing.Point(54, 83);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.Size = new System.Drawing.Size(28, 13);
             this.label2.TabIndex = 8;
-            this.label2.Text = "sifre:";
+            this.label2.Text = "Şifre";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(34, 38);
+            this.label1.Location = new System.Drawing.Point(61, 57);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(24, 13);
+            this.label1.Size = new System.Drawing.Size(21, 13);
             this.label1.TabIndex = 7;
-            this.label1.Text = "TC:";
+            this.label1.Text = "TC";
             // 
             // btngeri
             // 
-            this.btngeri.Location = new System.Drawing.Point(0, 114);
+            this.btngeri.Location = new System.Drawing.Point(2, 142);
             this.btngeri.Name = "btngeri";
-            this.btngeri.Size = new System.Drawing.Size(49, 36);
+            this.btngeri.Size = new System.Drawing.Size(45, 45);
             this.btngeri.TabIndex = 14;
             this.btngeri.Text = "Geri";
             this.btngeri.UseVisualStyleBackColor = true;
@@ -109,7 +112,10 @@ namespace HastaneKayit
             this.AcceptButton = this.btngiris;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(212, 148);
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ClientSize = new System.Drawing.Size(264, 191);
             this.Controls.Add(this.btngeri);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btngiris);
@@ -117,10 +123,10 @@ namespace HastaneKayit
             this.Controls.Add(this.txtsifre);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmSekreterGiris";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sekreter Giriş";
-            //this.Load += new System.EventHandler(this.FrmSekreterGiris_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
