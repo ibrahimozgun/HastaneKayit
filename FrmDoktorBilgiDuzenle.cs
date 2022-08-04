@@ -23,7 +23,7 @@ namespace HastaneKayit
         {
             if (txtad.Text == "" || txtsoyad.Text == "" || txtsifre.Text == "" || cmbbrans.Text == "" || msktelefon.Text == "" || txtemail.Text == "")
             {
-                MessageBox.Show("Eksik var", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Eksik var ", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtad.Focus();
             }
             else

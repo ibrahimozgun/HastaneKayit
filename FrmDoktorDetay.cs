@@ -53,7 +53,7 @@ namespace HastaneKayit
             dataGridView1.Columns[0].HeaderText = "ID";
             dataGridView1.Columns[1].HeaderText = "Tarih";
             dataGridView1.Columns[2].HeaderText = "Saat";
-            dataGridView1.Columns[3].HeaderText = "Branş";
+            dataGridView1.Columns[3].HeaderText = "Branş ";
             dataGridView1.Columns[6].HeaderText = "Hasta TC'si";
             dataGridView1.Columns[7].HeaderText = "Hastanın şikayeti";
             dataGridView1.Columns[8].HeaderText = "Muayene sonrası";
