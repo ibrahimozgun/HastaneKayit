@@ -100,6 +100,7 @@ namespace HastaneKayit
             }
             bgl.baglanti().Close();
 
+<<<<<<< HEAD
             if (lblizinbas.Text != "")
             {
                 DateTime timeizin = Convert.ToDateTime(lblizinbas.Text);
@@ -125,6 +126,24 @@ namespace HastaneKayit
             }
             Aktif_Randevu();
             Gecmis_Randevu();
+=======
+            //ekrandanki ismin randevulaını listeler
+            DataTable dt1 = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter("Select *From Tbl_Randevular where Randevudoktor='" + lbladsoyad.Text + "'", bgl.baglanti());
+            da.Fill(dt1);
+            dataGridView1.DataSource = dt1;
+            bgl.baglanti().Close();
+            dataGridView1.Columns[7].DisplayIndex = 3; //şikayeti tarihten sonraya taşıdık
+            dataGridView1.Columns[0].HeaderText = "ID";
+            dataGridView1.Columns[1].HeaderText = "Tarih";
+            dataGridView1.Columns[2].HeaderText = "Saat";
+            dataGridView1.Columns[3].HeaderText = "Branş ";
+            dataGridView1.Columns[6].HeaderText = "Hasta TC'si";
+            dataGridView1.Columns[7].HeaderText = "Hastanın şikayeti";
+            dataGridView1.Columns[8].HeaderText = "Muayene sonrası";
+            dataGridView1.Columns[4].Visible = false; //dataGridView1.Columns[4].HeaderText = "Doktor";
+            dataGridView1.Columns[5].Visible = false; //dataGridView1.Columns[5].HeaderText = "Durum";
+>>>>>>> fc2fa81d5b834ab0d976662dbe6ecbe014ea67ae
         }
         private void btnbilgiduzenle_Click(object sender, EventArgs e)
         {

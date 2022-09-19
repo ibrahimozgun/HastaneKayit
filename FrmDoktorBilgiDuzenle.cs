@@ -20,6 +20,40 @@ namespace HastaneKayit
         sqlbaglantısı bgl = new sqlbaglantısı();
         public string doktorid;
         public string doktortc;
+<<<<<<< HEAD
+=======
+        private void btnguncelle_Click(object sender, EventArgs e)
+        {
+            if (txtad.Text == "" || txtsoyad.Text == "" || txtsifre.Text == "" || cmbbrans.Text == "" || msktelefon.Text == "" || txtemail.Text == "")
+            {
+                MessageBox.Show("Eksik var ", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtad.Focus();
+            }
+            else
+            {
+                if(!this.txtemail.Text.Contains('@') || !this.txtemail.Text.Contains('.'))
+                {
+                    MessageBox.Show("geçerli mail gir");
+                }
+                else
+                {
+                    SqlCommand komutg = new SqlCommand("Update Tbl_Doktorlar Set " +
+                    "Doktorad=@g1, Doktorsoyad=@g2, Doktorbrans=@g3, Doktorsifre=@g4, " +
+                    "Doktortelefon=@g5, Doktoremail=@g6 where Doktortc=" + msktc.Text, bgl.baglanti());
+                    komutg.Parameters.AddWithValue("@g1", txtad.Text);
+                    komutg.Parameters.AddWithValue("@g2", txtsoyad.Text);
+                    komutg.Parameters.AddWithValue("@g3", cmbbrans.Text);
+                    komutg.Parameters.AddWithValue("@g4", txtsifre.Text);
+                    komutg.Parameters.AddWithValue("@g5", msktelefon.Text);
+                    komutg.Parameters.AddWithValue("@g6", txtemail.Text);
+                    komutg.ExecuteNonQuery();
+                    bgl.baglanti().Close();
+                    MessageBox.Show(msktc.Text + " TC Numaralı doktorun bilgileri güncellendi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Windows.Forms.Application.Exit(); //uygulama kapanır 
+                }                
+            }
+        }
+>>>>>>> fc2fa81d5b834ab0d976662dbe6ecbe014ea67ae
         private void FrmDoktorBilgiDuzenle_Load(object sender, EventArgs e)
         {
             cmbbrans.Items.Clear();
